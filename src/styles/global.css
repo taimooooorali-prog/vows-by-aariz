@@ -29,150 +29,255 @@
 }
 
 :root {
-  --paper: #ffffff;
-  --soft: #fafaf8;
-  --ink: #1a1a1a;
-  --muted: #666666;
-  --hairline: #e7e7e2;
-  --bronze: #7a5f38;
-  --bronze-light: #c9a97e;
+  --cream: #fefcea;
+  --paper: #fbfbfb;
+  --ink: #222222;
+  --body: #333333;
+  --main: #585858;
+  --hairline: rgba(88, 88, 88, 0.48);
+  --dark: #191919;
+  --blush: #d0b8ac;
+  --header-h: 72px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 95px;
+  }
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+html,
 body {
-  background-color: var(--paper);
-  color: var(--ink);
+  /* overflow-x: clip (not hidden) so position: sticky keeps working */
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--body);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--bronze);
-  color: #fff;
+  background: var(--main);
+  color: var(--cream);
 }
 
 :focus-visible {
-  outline: 2px solid var(--bronze);
+  outline: 2px solid currentColor;
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* ---------- Marquee ---------- */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.marquee-track {
-  animation: marquee 32s linear infinite;
-  will-change: transform;
-}
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
+/* ---------- Shared hover language: .18s everywhere ---------- */
 
-/* ---------- Button shine sweep ---------- */
-.btn-shine {
+/* Nav links: thin full-width underline sweeping in from the left */
+.nav-link {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
+  padding-bottom: 2px;
 }
-.btn-shine::after {
+.nav-link::after {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
-  transform: translateX(-120%);
-  transition: transform 0.7s ease;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.18s ease-in-out;
 }
-.btn-shine:hover::after {
-  transform: translateX(120%);
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-open::after {
+  transform: scaleX(1);
 }
 
-/* ---------- FAQ accordion (grid-rows trick, no JS height math) ---------- */
-.faq-panel {
+/* Pill buttons: serif, 1.2px outline, transparent fill; hover fills solid */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1.2px solid var(--main);
+  border-radius: 1.5em;
+  padding: 0.72em 1.6em;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: var(--ink);
+  background: transparent;
+  transition: background-color 0.18s ease-in-out, color 0.18s ease-in-out, border-color 0.18s ease-in-out;
+}
+.btn-pill:hover {
+  background: var(--main);
+  border-color: var(--main);
+  color: var(--cream);
+}
+.btn-pill-light {
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #fff;
+}
+.btn-pill-light:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #fff;
+}
+
+/* Circular outline arrow buttons: fill dark + white glyph on hover */
+.btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1.2px solid var(--main);
+  border-radius: 9999px;
+  color: var(--ink);
+  background: transparent;
+  transition: background-color 0.18s ease-in-out, color 0.18s ease-in-out, border-color 0.18s ease-in-out;
+}
+.btn-circle:hover {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: #fff;
+}
+.btn-circle-sm {
+  width: 38px;
+  height: 38px;
+}
+
+/* ---------- Header states ---------- */
+#site-header {
+  color: #fff;
+  transition: background-color 0.18s ease-in-out, color 0.18s ease-in-out, border-color 0.18s ease-in-out;
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+#site-header.is-scrolled {
+  background-color: var(--cream);
+  border-bottom-color: var(--hairline);
+  color: var(--ink);
+}
+
+/* ---------- Mega menus ---------- */
+.mega-panel {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out, visibility 0s linear 0.18s;
+  pointer-events: none;
+}
+.mega-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out;
+  pointer-events: auto;
+}
+.mega-trigger .mega-chevron {
+  transition: transform 0.18s ease-in-out;
+}
+.mega-trigger.is-open .mega-chevron {
+  transform: rotate(180deg);
+}
+
+/* ---------- Hero slider ---------- */
+.hero-slide {
+  opacity: 0;
+  transition: opacity 0.666s ease;
+}
+.hero-slide.is-active {
+  opacity: 1;
+}
+.hero-slide img {
+  filter: grayscale(1);
+}
+
+/* ---------- Gallery slider ---------- */
+.g-track {
+  transition: transform 0.5s ease;
+}
+.g-track.no-anim {
+  transition: none;
+}
+.g-slide {
+  flex: 0 0 calc((100% - 1rem) / 1.5);
+}
+@media (min-width: 640px) {
+  .g-slide {
+    flex-basis: calc((100% - 2rem) / 2.5);
+  }
+}
+@media (min-width: 1024px) {
+  .g-slide {
+    flex-basis: calc((100% - 4rem) / 4.5);
+  }
+}
+.g-progress-fill {
+  transition: transform 0.5s ease;
+  transform-origin: left center;
+}
+
+/* ---------- Mobile menu accordions (grid-rows trick, no JS height math) ---------- */
+.m-acc-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: grid-template-rows 0.18s ease-in-out;
 }
-.faq-item[data-open='true'] .faq-panel {
+.m-acc[data-open='true'] .m-acc-panel {
   grid-template-rows: 1fr;
 }
-.faq-panel > div {
+.m-acc-panel > div {
   overflow: hidden;
 }
-.faq-item[data-open='true'] .faq-chevron {
-  transform: rotate(45deg);
+.m-acc-chevron {
+  transition: transform 0.18s ease-in-out;
 }
-.faq-chevron {
-  transition: transform 0.35s ease;
-}
-
-/* ---------- Gallery ---------- */
-.gallery-item {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.gallery-item.is-hidden {
-  display: none;
-}
-.gallery-item img {
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.gallery-item:hover img,
-.gallery-item:focus-visible img {
-  transform: scale(1.06);
-}
-.gallery-item .gallery-caption {
-  transition: opacity 0.45s ease, transform 0.45s ease;
-  opacity: 0;
-  transform: translateY(8px);
-}
-.gallery-item:hover .gallery-caption,
-.gallery-item:focus-visible .gallery-caption {
-  opacity: 1;
-  transform: translateY(0);
+.m-acc[data-open='true'] .m-acc-chevron {
+  transform: rotate(180deg);
 }
 
-/* Split-text word masks (JS adds the spans; no-JS keeps plain text) */
-.split-line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.18em;
-  margin-bottom: -0.18em;
+/* ---------- Price rows ---------- */
+.price-row {
+  transition: background-color 0.18s ease-in-out, color 0.18s ease-in-out, border-color 0.18s ease-in-out;
 }
-.split-word {
-  display: inline-block;
-  will-change: transform;
+.price-row:hover {
+  background-color: var(--dark);
+  border-color: var(--dark);
+  color: var(--cream);
 }
-
-/* Thin bronze rule flourish */
-.rule-bronze {
-  height: 1px;
-  background: linear-gradient(90deg, var(--bronze), transparent);
+.price-row:hover .price-row-sub {
+  color: rgba(254, 252, 234, 0.72);
 }
 
-/* Lightbox + mobile menu: hidden attribute wins over display utilities */
+/* ---------- Lightbox + mobile menu: hidden attribute wins ---------- */
 #lightbox[hidden],
 #mobile-menu[hidden] {
   display: none;
 }
 
-/* Respect reduced motion: kill CSS motion; JS checks the same query */
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .marquee-track {
-    animation: none;
-  }
-  .gallery-item img,
-  .gallery-item .gallery-caption,
-  .btn-shine::after,
-  .faq-panel,
-  .faq-chevron {
+  .hero-slide,
+  .g-track,
+  .g-progress-fill,
+  .mega-panel,
+  .m-acc-panel,
+  .nav-link::after,
+  .btn-pill,
+  .btn-circle,
+  .price-row,
+  #site-header {
     transition: none;
   }
 }
