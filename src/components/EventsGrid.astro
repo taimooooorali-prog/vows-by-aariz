@@ -1,0 +1,57 @@
+---
+import { ArrowUpRight } from 'lucide-astro';
+import { EVENTS } from '../data/site';
+---
+
+<section id="events" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="Events">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <h2 class="reveal font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-[3.5rem]">Some of Our Events</h2>
+
+    <div class="mt-12 grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {EVENTS.map((e, i) => (
+        <article id={e.id} class="scroll-mt-24 lg:scroll-mt-[111px]">
+          <button
+            type="button"
+            class="block aspect-[3/4] w-full appearance-none border-0 bg-transparent p-0"
+            data-lightbox-trigger
+            data-lb-group="events"
+            data-lb-index={i}
+            data-full={e.photo.src}
+            data-alt={e.photo.alt}
+            data-caption={`${e.names} — ${e.detail}`}
+            aria-label={`View photo: ${e.names} — ${e.detail}`}
+          >
+            <img
+              src={e.photo.src}
+              alt={e.photo.alt}
+              width={e.photo.w}
+              height={e.photo.h}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover"
+            />
+          </button>
+          <div class="mt-4 flex items-start justify-between gap-4">
+            <h3 class="font-display text-[1.7rem] font-normal leading-[1.15]">
+              {e.names}<br />
+              <span class="text-[1.35rem] italic text-main">{e.detail}</span>
+            </h3>
+            <button
+              type="button"
+              class="btn-circle btn-circle-sm mt-1"
+              data-lightbox-trigger
+              data-lb-group="events"
+              data-lb-index={i}
+              data-full={e.photo.src}
+              data-alt={e.photo.alt}
+              data-caption={`${e.names} — ${e.detail}`}
+              aria-label={`Open photo viewer: ${e.names} — ${e.detail}`}
+            >
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

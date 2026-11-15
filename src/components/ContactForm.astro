@@ -1,61 +1,48 @@
 ---
-const cities = ['Lahore', 'Karachi', 'Islamabad', 'Somewhere else in Pakistan'];
 ---
 
-<form id="booking-form" class="space-y-5" novalidate>
-  <div class="grid gap-5 sm:grid-cols-2">
-    <div>
-      <label for="field-name" class="mb-1.5 block text-sm font-bold">Your names</label>
-      <input id="field-name" name="name" type="text" required autocomplete="name" placeholder="Ayesha & Bilal"
-        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
-    </div>
-    <div>
-      <label for="field-contact" class="mb-1.5 block text-sm font-bold">Phone or email</label>
-      <input id="field-contact" name="contact" type="text" required autocomplete="tel" placeholder="03xx xxxxxxx"
-        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
-    </div>
-  </div>
-
-  <div class="grid gap-5 sm:grid-cols-2">
-    <div>
-      <label for="field-date" class="mb-1.5 block text-sm font-bold">Event date</label>
-      <input id="field-date" name="date" type="date"
-        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
-    </div>
-    <div>
-      <label for="field-city" class="mb-1.5 block text-sm font-bold">City</label>
-      <select id="field-city" name="city"
-        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30">
-        {cities.map((c) => <option value={c}>{c}</option>)}
-      </select>
-    </div>
+<form id="booking-form" class="space-y-6 text-left" novalidate>
+  <div>
+    <label for="field-name" class="mb-2 block text-sm font-bold text-ink">Name</label>
+    <input
+      id="field-name"
+      name="name"
+      type="text"
+      required
+      autocomplete="name"
+      placeholder="Ayesha & Bilal"
+      class="w-full rounded-full border-[1.2px] border-main bg-[#FFFDF2] px-6 py-3.5 text-ink placeholder:text-main/60 focus:outline-none focus:ring-2 focus:ring-main/40"
+    />
   </div>
 
   <div>
-    <label for="field-package" class="mb-1.5 block text-sm font-bold">Package you’re considering</label>
-    <select id="field-package" name="package"
-      class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30">
-      <option value="Not sure yet">Not sure yet — help me choose</option>
-      <option value="Essential — PKR 85,000">Essential — PKR 85,000</option>
-      <option value="Signature — PKR 150,000">Signature — PKR 150,000</option>
-      <option value="Royal — PKR 250,000">Royal — PKR 250,000</option>
-    </select>
+    <label for="field-email" class="mb-2 block text-sm font-bold text-ink">Email Address</label>
+    <input
+      id="field-email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="w-full rounded-full border-[1.2px] border-main bg-[#FFFDF2] px-6 py-3.5 text-ink placeholder:text-main/60 focus:outline-none focus:ring-2 focus:ring-main/40"
+    />
   </div>
 
   <div>
-    <label for="field-message" class="mb-1.5 block text-sm font-bold">Tell us about your celebration</label>
-    <textarea id="field-message" name="message" rows="4" placeholder="Two events in Lahore — mehndi at home, baraat at a marquee. About 300 guests…"
-      class="w-full resize-y rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30"></textarea>
+    <label for="field-message" class="mb-2 block text-sm font-bold text-ink">Message</label>
+    <textarea
+      id="field-message"
+      name="message"
+      rows="5"
+      placeholder="Tell us about your celebration — the events, the city, the date if you know it…"
+      class="w-full resize-y rounded-[1.75rem] border-[1.2px] border-main bg-[#FFFDF2] px-6 py-4 text-ink placeholder:text-main/60 focus:outline-none focus:ring-2 focus:ring-main/40"
+    ></textarea>
   </div>
 
-  <p id="form-error" class="hidden rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800" role="alert"></p>
+  <p id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-semibold text-red-800" role="alert"></p>
 
-  <button type="submit"
-    class="btn-shine magnetic w-full rounded-full bg-ink px-8 py-4 text-base font-bold text-white shadow-soft transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto">
-    Send booking enquiry →
-  </button>
-  <p class="text-sm leading-relaxed text-muted">
-    This opens your email app with the enquiry pre-filled — no account or backend needed.
-    Prefer WhatsApp? Use the green button beside this form. We reply within 24 hours.
+  <button type="submit" class="btn-pill w-full">Send Form</button>
+  <p class="text-center text-sm leading-relaxed text-main">
+    This opens your email app with the enquiry pre-filled — no account or backend needed. We reply within 24 hours.
   </p>
 </form>

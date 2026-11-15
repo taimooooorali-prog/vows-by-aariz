@@ -1,0 +1,63 @@
+---
+import { Aperture, Facebook, Instagram, Mail, Phone, Youtube } from 'lucide-astro';
+
+const row1 = [
+  { label: 'Home', href: '#top' },
+  { label: 'Services', href: '#services' },
+  { label: 'Portfolio', href: '#portfolio' },
+  { label: 'Events', href: '#events' },
+  { label: 'Testimonials', href: '#testimonials' },
+];
+const row2 = [
+  { label: 'Packages', href: '#packages' },
+  { label: 'About Us', href: '#about' },
+  { label: 'Albums', href: '#albums' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const socials = [
+  { label: 'Vows by Aariz on Instagram', href: 'https://www.instagram.com/vowsbyaariz', Icon: Instagram },
+  { label: 'Vows by Aariz on YouTube', href: 'https://www.youtube.com/@vowsbyaariz', Icon: Youtube },
+  { label: 'Vows by Aariz on Facebook', href: 'https://www.facebook.com/vowsbyaariz', Icon: Facebook },
+];
+---
+
+<footer class="border-t border-hairline bg-cream text-ink">
+  <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+    <div class="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
+      <a href="#top" class="flex shrink-0 items-center gap-2.5" aria-label="Vows by Aariz — back to top">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full border border-current" aria-hidden="true"><Aperture size={20} /></span>
+        <span class="font-display text-2xl font-normal tracking-tight">Vows <span class="italic">by Aariz</span></span>
+      </a>
+
+      <nav aria-label="Footer navigation">
+        <div class="flex flex-wrap gap-x-7 gap-y-2 text-sm font-semibold">
+          {row1.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+        </div>
+        <div class="mt-3 flex flex-wrap gap-x-7 gap-y-2 text-sm font-semibold lg:justify-center">
+          {row2.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+        </div>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        {socials.map(({ label, href, Icon }) => (
+          <a href={href} target="_blank" rel="noopener noreferrer" class="btn-circle" aria-label={label}>
+            <Icon size={18} aria-hidden="true" />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-3 border-t border-hairline pt-6 text-sm text-main sm:flex-row sm:items-center sm:justify-between">
+      <p>© 2026 Vows by Aariz</p>
+      <p class="flex flex-wrap items-center gap-x-5 gap-y-1">
+        <a href="tel:+923000000000" class="nav-link inline-flex items-center gap-1.5 font-semibold text-ink"><Phone size={14} aria-hidden="true" /> +92 300 0000000</a>
+        <a href="mailto:hello@vowsbyaariz.com" class="nav-link inline-flex items-center gap-1.5 font-semibold text-ink"><Mail size={14} aria-hidden="true" /> hello@vowsbyaariz.com</a>
+      </p>
+      <p class="max-w-xs sm:text-right">
+        Demo website — fictional content. Photography via
+        <a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer" class="nav-link font-semibold text-ink"> Pexels</a>.
+      </p>
+    </div>
+  </div>
+</footer>

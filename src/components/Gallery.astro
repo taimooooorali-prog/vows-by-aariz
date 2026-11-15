@@ -1,104 +1,62 @@
 ---
-import { Expand } from 'lucide-astro';
-
-interface Photo {
-  src: string;
-  alt: string;
-  category: 'ceremony' | 'candid' | 'details';
-  caption: string;
-  event: string;
-  w: number;
-  h: number;
-}
-
-const photos: Photo[] = [
-  { src: '/images/gallery-01.webp', alt: 'Close-up of a smiling bride with her eyes closed hugging her groom', category: 'candid', caption: 'The quiet embrace', event: 'Nikkah · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-02.webp', alt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', category: 'ceremony', caption: 'Golden hour vows', event: 'Baraat · Islamabad', w: 900, h: 1200 },
-  { src: '/images/gallery-03.webp', alt: 'Indian bride and groom in traditional attire embracing joyfully outdoors', category: 'ceremony', caption: 'Pure joy', event: 'Walima · Karachi', w: 900, h: 1200 },
-  { src: '/images/gallery-04.webp', alt: 'Black and white photograph of a wedding couple holding hands', category: 'details', caption: 'Hand in hand', event: 'Nikkah · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-05.webp', alt: 'Black and white silhouette portrait of a bride and groom at sunset', category: 'candid', caption: 'Silhouette at dusk', event: 'Rukhsati · Murree', w: 900, h: 1200 },
-  { src: '/images/gallery-06.webp', alt: 'Close-up of a bride’s hands decorated with intricate henna', category: 'details', caption: 'Henna stories', event: 'Mehndi · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-07.webp', alt: 'Close-up of a couple’s hands during a wedding ritual with henna art', category: 'details', caption: 'The ritual', event: 'Mehndi · Faisalabad', w: 900, h: 1200 },
-  { src: '/images/gallery-08.webp', alt: 'Bride in red and yellow covering her face with henna-decorated hands, wearing a flower garland at her mehndi', category: 'candid', caption: 'Mehndi joy', event: 'Mehndi · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-09.webp', alt: 'Sunset-lit outdoor wedding reception setup with adorned tables and chairs', category: 'details', caption: 'The setting', event: 'Walima · Islamabad', w: 900, h: 1200 },
-  { src: '/images/gallery-10.webp', alt: 'Lavish wedding table with floral arrangements and hanging lights', category: 'details', caption: 'Table for two hundred', event: 'Walima · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-11.webp', alt: 'Outdoor evening event space lit with fairy lights and draped curtains', category: 'details', caption: 'A thousand lights', event: 'Qawwali Night · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-12.webp', alt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion', category: 'ceremony', caption: 'The portrait', event: 'Baraat · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-13.webp', alt: 'Traditional couple in classic wedding attire sharing a joyful moment indoors', category: 'ceremony', caption: 'Laughter, kept', event: 'Nikkah · Karachi', w: 900, h: 1200 },
-  { src: '/images/gallery-14.webp', alt: 'Couple in traditional attire holding hands outdoors during their wedding photoshoot', category: 'ceremony', caption: 'Walking together', event: 'Baraat · Hunza', w: 900, h: 1200 },
-  { src: '/images/gallery-15.webp', alt: 'Bride in a red lehenga with a veil looking down at the henna on her hands', category: 'ceremony', caption: 'The bride, in red', event: 'Baraat · Lahore', w: 900, h: 1200 },
-];
-
-const filters = [
-  { key: 'all', label: 'All work' },
-  { key: 'ceremony', label: 'Ceremony' },
-  { key: 'candid', label: 'Candid' },
-  { key: 'details', label: 'Details' },
-];
+import { ArrowLeft, ArrowRight } from 'lucide-astro';
+import { GALLERY } from '../data/site';
 ---
 
-<div class="reveal-up">
-  <!-- Filter chips -->
-  <div class="flex flex-wrap items-center gap-2 sm:gap-3" role="group" aria-label="Filter portfolio photos">
-    {filters.map((f) => (
-      <button
-        type="button"
-        class="filter-chip rounded-full border px-5 py-2 text-sm font-semibold tracking-wide"
-        data-filter={f.key}
-        aria-pressed={f.key === 'all' ? 'true' : 'false'}
-      >
-        {f.label}
+<section id="portfolio" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="The Portfolio">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="reveal flex items-center justify-center gap-4 sm:gap-5">
+      <h2 class="text-center font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl">The Portfolio</h2>
+      <button type="button" class="btn-circle btn-circle-sm" data-g-next aria-label="Next photos">
+        <ArrowRight size={17} aria-hidden="true" />
       </button>
-    ))}
+    </div>
+    <p class="reveal mx-auto mt-4 max-w-xl text-center text-[1.125rem] leading-relaxed text-main">
+      Fifteen frames from recent shaadis. Tap any photo to see it full-screen.
+    </p>
   </div>
 
-  <!-- Editorial grid -->
-  <div id="gallery-grid" class="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-    {photos.map((p, i) => (
-      <figure
-        class="gallery-item group relative overflow-hidden rounded-xl bg-soft focus-within:ring-2 focus-within:ring-bronze"
-        data-category={p.category}
-        data-index={i}
-      >
-        <button type="button" class="block aspect-[3/4] w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left" data-lightbox-trigger data-full={p.src} data-alt={p.alt} data-caption={`${p.caption} — ${p.event}`} aria-label={`View photo: ${p.caption} — ${p.event}`}>
-          <img
-            src={p.src}
-            alt={p.alt}
-            width={p.w}
-            height={p.h}
-            loading="lazy"
-            decoding="async"
-            class="h-full w-full object-cover"
-          />
+  <div class="mt-12 overflow-hidden" data-gallery-slider>
+    <div id="gallery-track" class="g-track flex gap-4 px-5 sm:px-8">
+      {GALLERY.map((p, i) => (
+        <figure class="g-slide shrink-0" data-index={i}>
+          <button
+            type="button"
+            class="block aspect-[3/4] w-full appearance-none border-0 bg-transparent p-0"
+            data-lightbox-trigger
+            data-lb-group="gallery"
+            data-lb-index={i}
+            data-full={p.src}
+            data-alt={p.alt}
+            data-caption={`${p.caption} — ${p.event}`}
+            aria-label={`View photo: ${p.caption} — ${p.event}`}
+          >
+            <img
+              src={p.src}
+              alt={p.alt}
+              width={p.w}
+              height={p.h}
+              loading="eager"
+              decoding="async"
+              class="h-full w-full object-cover"
+            />
+          </button>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mx-auto mt-8 flex max-w-7xl items-center gap-5 px-5 sm:px-8">
+      <div class="h-px flex-1 bg-hairline" aria-hidden="true">
+        <div id="gallery-progress" class="g-progress-fill h-px bg-main" style="transform: scaleX(0.0667)"></div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button type="button" class="btn-circle" data-g-prev aria-label="Previous photos">
+          <ArrowLeft size={18} aria-hidden="true" />
         </button>
-        <figcaption class="gallery-caption pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-ink/80 via-ink/35 to-transparent p-4 pt-12 text-left sm:p-5 sm:pt-16">
-          <span>
-            <span class="block font-display text-lg italic text-white sm:text-xl">{p.caption}</span>
-            <span class="mt-0.5 block text-[11px] font-semibold uppercase tracking-widest2 text-bronzelight">{p.event}</span>
-          </span>
-          <span class="mb-1 shrink-0 text-white/90" aria-hidden="true"><Expand size={18} /></span>
-        </figcaption>
-      </figure>
-    ))}
+        <button type="button" class="btn-circle" data-g-next aria-label="Next photos">
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
   </div>
-
-  <p id="gallery-empty" class="mt-10 hidden text-center text-muted" role="status">No photos in this category yet.</p>
-</div>
-
-<!-- Lightbox -->
-<div
-  id="lightbox"
-  class="fixed inset-0 z-[80] hidden items-center justify-center bg-ink/95 p-4 backdrop-blur-sm"
-  role="dialog"
-  aria-modal="true"
-  aria-label="Photo viewer"
-  hidden
->
-  <button type="button" id="lightbox-close" class="absolute right-4 top-4 z-10 rounded-full border border-white/30 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-ink" aria-label="Close photo viewer">Close ✕</button>
-  <button type="button" id="lightbox-prev" class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-lg text-white transition-colors hover:bg-white hover:text-ink sm:left-6" aria-label="Previous photo">←</button>
-  <button type="button" id="lightbox-next" class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-lg text-white transition-colors hover:bg-white hover:text-ink sm:right-6" aria-label="Next photo">→</button>
-  <figure class="max-h-full max-w-4xl text-center">
-    <img id="lightbox-img" alt="" class="mx-auto max-h-[78vh] w-auto max-w-full rounded-lg object-contain shadow-soft" />
-    <figcaption id="lightbox-caption" class="mt-4 font-display text-lg italic text-white"></figcaption>
-  </figure>
-</div>
+</section>

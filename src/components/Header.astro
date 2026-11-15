@@ -1,0 +1,165 @@
+---
+import { Aperture, ChevronDown, Menu, X } from 'lucide-astro';
+import { MEGA_MENUS } from '../data/site';
+
+// Nav order: Services⌄, Portfolio, Events⌄, Testimonials, Packages⌄, About Us, Albums, Contact
+const megaByKey = Object.fromEntries(MEGA_MENUS.map((m) => [m.key, m]));
+
+interface PlainLink {
+  label: string;
+  href: string;
+}
+
+const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink | null }[] = [
+  { menu: megaByKey.services, before: null },
+  { menu: megaByKey.events, before: { label: 'Portfolio', href: '#portfolio' } },
+  { menu: megaByKey.packages, before: { label: 'Testimonials', href: '#testimonials' } },
+];
+---
+
+<header id="site-header" class="fixed inset-x-0 top-0 z-50">
+  <div class="flex h-[72px] items-center justify-between gap-4 px-5 sm:px-8 lg:h-[95px]">
+    <a href="#top" class="flex shrink-0 items-center gap-2.5" aria-label="Vows by Aariz — home">
+      <span class="flex h-10 w-10 items-center justify-center rounded-full border border-current" aria-hidden="true"><Aperture size={20} /></span>
+      <span class="font-display text-xl font-normal leading-none tracking-tight sm:text-2xl">Vows <span class="italic">by Aariz</span></span>
+    </a>
+
+    <nav class="hidden items-center gap-4 text-[13px] font-medium xl:gap-6 xl:text-sm lg:flex" aria-label="Main navigation">
+      <button
+        type="button"
+        class="mega-trigger nav-link inline-flex items-center gap-1 py-2"
+        data-mega-trigger="services"
+        aria-expanded="false"
+        aria-controls="mega-services"
+      >
+        Services <ChevronDown size={15} class="mega-chevron" aria-hidden="true" />
+      </button>
+      <a class="nav-link py-2" href="#portfolio">Portfolio</a>
+      <button
+        type="button"
+        class="mega-trigger nav-link inline-flex items-center gap-1 py-2"
+        data-mega-trigger="events"
+        aria-expanded="false"
+        aria-controls="mega-events"
+      >
+        Events <ChevronDown size={15} class="mega-chevron" aria-hidden="true" />
+      </button>
+      <a class="nav-link py-2" href="#testimonials">Testimonials</a>
+      <button
+        type="button"
+        class="mega-trigger nav-link inline-flex items-center gap-1 py-2"
+        data-mega-trigger="packages"
+        aria-expanded="false"
+        aria-controls="mega-packages"
+      >
+        Packages <ChevronDown size={15} class="mega-chevron" aria-hidden="true" />
+      </button>
+      <a class="nav-link py-2" href="#about">About Us</a>
+      <a class="nav-link py-2" href="#albums">Albums</a>
+      <a class="nav-link py-2" href="#contact">Contact</a>
+    </nav>
+
+    <div class="flex items-center lg:hidden">
+      <button
+        type="button"
+        id="mobile-menu-open"
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-current"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <Menu size={20} />
+      </button>
+    </div>
+    <span class="hidden w-10 shrink-0 lg:block" aria-hidden="true"></span>
+  </div>
+
+  <!-- Mega-menu panels: near-black, full-width, drop under the header -->
+  {MEGA_MENUS.map((menu) => (
+    <div
+      id={menu.panelId}
+      class="mega-panel absolute inset-x-0 top-full hidden bg-dark text-white lg:block"
+      data-mega-panel={menu.key}
+      role="region"
+      aria-label={`${menu.label} menu`}
+    >
+      <div class="mx-auto flex max-w-7xl items-center gap-10 px-5 py-6 sm:px-8">
+        <img
+          src={menu.photo}
+          alt={menu.photoAlt}
+          width="250"
+          height="310"
+          loading="eager"
+          decoding="async"
+          class="hidden h-[310px] w-[250px] shrink-0 object-cover sm:block"
+        />
+        <div class="min-w-0 flex-1">
+          <p class="font-display text-5xl font-normal leading-none">{menu.heading}</p>
+          <div class="mt-7 grid grid-cols-5 gap-x-6 gap-y-4">
+            {menu.links.map((link) => (
+              <a href={link.href} class="nav-link justify-self-start text-[15px] leading-snug text-white/90 hover:text-white">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</header>
+
+<!-- Mobile menu: full-screen cream overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[70] hidden bg-cream text-ink" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="flex h-full w-full flex-col overflow-y-auto px-5 py-4 sm:px-8">
+    <div class="flex items-center justify-between">
+      <span class="flex items-center gap-2.5">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full border border-current" aria-hidden="true"><Aperture size={20} /></span>
+        <span class="font-display text-xl font-normal leading-none tracking-tight">Vows <span class="italic">by Aariz</span></span>
+      </span>
+      <button
+        type="button"
+        id="mobile-menu-close"
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-current"
+        aria-label="Close menu"
+      >
+        <X size={20} />
+      </button>
+    </div>
+
+    <nav class="mt-6 flex flex-col" aria-label="Mobile navigation">
+      {mobileAccordions.map(({ menu, before }) => (
+        <>
+          {before && (
+            <a href={before.href} class="border-b border-hairline py-4 font-display text-3xl font-normal">{before.label}</a>
+          )}
+          <div class="m-acc border-b border-hairline" data-open="false">
+            <button
+              type="button"
+              class="m-acc-toggle flex w-full items-center justify-between py-4 text-left font-display text-3xl font-normal"
+              aria-expanded="false"
+              aria-controls={`m-acc-${menu.key}`}
+            >
+              {menu.label}
+              <ChevronDown size={22} class="m-acc-chevron shrink-0" aria-hidden="true" />
+            </button>
+            <div id={`m-acc-${menu.key}`} class="m-acc-panel">
+              <div>
+                <div class="flex flex-col gap-1 pb-5 pl-1">
+                  {menu.links.map((link) => (
+                    <a href={link.href} class="py-2 text-[15px] text-body">{link.label}</a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ))}
+      <a href="#about" class="border-b border-hairline py-4 font-display text-3xl font-normal">About Us</a>
+      <a href="#albums" class="border-b border-hairline py-4 font-display text-3xl font-normal">Albums</a>
+      <a href="#contact" class="border-b border-hairline py-4 font-display text-3xl font-normal">Contact</a>
+    </nav>
+
+    <a href="#contact" class="btn-pill mt-8 w-full">Get in Touch</a>
+    <p class="mt-6 pb-4 text-center text-sm text-main">Lahore · Karachi · Islamabad</p>
+  </div>
+</div>

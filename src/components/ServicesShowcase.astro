@@ -1,0 +1,70 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import { SERVICES } from '../data/site';
+---
+
+<section id="services" class="scroll-mt-24 lg:scroll-mt-[111px]" aria-label="Services">
+  <div class="mx-auto max-w-7xl px-5 pb-4 pt-[90px] sm:px-8">
+    <p class="reveal text-center text-xs font-bold uppercase tracking-widest2 text-main">What we do</p>
+    <h2 class="reveal mt-4 text-center font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl">Seven ways we tell your story</h2>
+  </div>
+
+  {SERVICES.map((s) => (
+    <article id={s.showId} class="mx-auto max-w-7xl scroll-mt-24 px-5 py-14 sm:px-8 lg:scroll-mt-[111px] lg:py-20" aria-label={s.title}>
+      <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        {/* Sticky text column */}
+        <div class="lg:sticky lg:top-[120px] lg:self-start">
+          <p class="reveal flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-main">
+            <span class="h-px w-10 bg-main" aria-hidden="true"></span>
+            {String(s.n).padStart(2, '0')}
+          </p>
+          <h3 class="reveal mt-5 font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-[3.25rem]">{s.title}</h3>
+          <p class="reveal mt-5 max-w-md text-[1.125rem] leading-relaxed text-main">{s.desc}</p>
+          <a href={`#${s.svcId}`} class="reveal group mt-7 inline-flex items-center gap-2 font-display text-xl font-normal text-ink">
+            <span class="nav-link">Discover More</span>
+            <ArrowRight size={19} class="transition-transform duration-150 group-hover:translate-x-1" aria-hidden="true" />
+          </a>
+        </div>
+
+        {/* Staggered image columns with subtle parallax */}
+        <div class="grid grid-cols-2 gap-4 sm:gap-5" data-parallax-block>
+          <div class="flex flex-col gap-4 sm:gap-5" data-parallax-col="a">
+            <img
+              src={s.images[0].src}
+              alt={s.images[0].alt}
+              width={s.images[0].w}
+              height={s.images[0].h}
+              loading="lazy"
+              decoding="async"
+              class={`${s.images[0].ratio} w-full object-cover`}
+            />
+            <img
+              src={s.images[1].src}
+              alt={s.images[1].alt}
+              width={s.images[1].w}
+              height={s.images[1].h}
+              loading="lazy"
+              decoding="async"
+              class={`${s.images[1].ratio} w-full object-cover`}
+            />
+          </div>
+          <div class="flex flex-col gap-4 sm:gap-5 lg:mt-16" data-parallax-col="b">
+            <img
+              src={s.images[2].src}
+              alt={s.images[2].alt}
+              width={s.images[2].w}
+              height={s.images[2].h}
+              loading="lazy"
+              decoding="async"
+              class={`${s.images[2].ratio} w-full object-cover`}
+            />
+            <p class="border-l border-hairline pl-4 text-sm leading-relaxed text-main" aria-hidden="true">
+              <span class="font-display text-2xl italic text-ink">“{s.title}”</span><br />
+              from {s.price}
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+  ))}
+</section>

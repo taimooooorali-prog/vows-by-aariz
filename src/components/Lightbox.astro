@@ -1,0 +1,22 @@
+---
+---
+
+<!-- Lightbox: single shared dialog for the gallery slider and event cards.
+     Kept OUTSIDE any animated wrapper (fixed positioning must not inherit
+     ancestor transforms). -->
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[80] hidden items-center justify-center bg-dark/95 p-4 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Photo viewer"
+  hidden
+>
+  <button type="button" id="lightbox-close" class="absolute right-4 top-4 z-10 rounded-full border border-white/30 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-ink" aria-label="Close photo viewer">Close ✕</button>
+  <button type="button" id="lightbox-prev" class="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-lg text-white transition-colors hover:bg-white hover:text-ink sm:left-6" aria-label="Previous photo">←</button>
+  <button type="button" id="lightbox-next" class="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/30 px-3 py-2 text-lg text-white transition-colors hover:bg-white hover:text-ink sm:right-6" aria-label="Next photo">→</button>
+  <figure class="max-h-full max-w-4xl text-center">
+    <img id="lightbox-img" alt="" class="mx-auto max-h-[78vh] w-auto max-w-full rounded-lg object-contain shadow-soft" />
+    <figcaption id="lightbox-caption" class="mt-4 font-display text-lg italic text-white"></figcaption>
+  </figure>
+</div>
