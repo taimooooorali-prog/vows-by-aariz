@@ -9,21 +9,20 @@ interface Photo {
   event: string;
   w: number;
   h: number;
-  wide?: boolean;
 }
 
 const photos: Photo[] = [
   { src: '/images/gallery-01.webp', alt: 'Close-up of a smiling bride with her eyes closed hugging her groom', category: 'candid', caption: 'The quiet embrace', event: 'Nikkah · Lahore', w: 1200, h: 1500 },
   { src: '/images/gallery-02.webp', alt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', category: 'ceremony', caption: 'Golden hour vows', event: 'Baraat · Islamabad', w: 1200, h: 1800 },
   { src: '/images/gallery-03.webp', alt: 'Indian bride and groom in traditional attire embracing joyfully outdoors', category: 'ceremony', caption: 'Pure joy', event: 'Walima · Karachi', w: 1200, h: 1800 },
-  { src: '/images/gallery-06.webp', alt: 'Close-up of a bride’s hands decorated with intricate henna', category: 'details', caption: 'Henna stories', event: 'Mehndi · Lahore', w: 1200, h: 800, wide: true },
+  { src: '/images/gallery-06.webp', alt: 'Close-up of a bride’s hands decorated with intricate henna', category: 'details', caption: 'Henna stories', event: 'Mehndi · Lahore', w: 1200, h: 800 },
   { src: '/images/gallery-04.webp', alt: 'Black and white photograph of a wedding couple holding hands', category: 'details', caption: 'Hand in hand', event: 'Nikkah · Lahore', w: 1200, h: 2134 },
   { src: '/images/gallery-05.webp', alt: 'Black and white silhouette portrait of a bride and groom at sunset', category: 'candid', caption: 'Silhouette at dusk', event: 'Rukhsati · Murree', w: 1200, h: 1500 },
-  { src: '/images/gallery-08.webp', alt: 'Newlyweds dancing under twinkling lights surrounded by guests holding sparklers', category: 'candid', caption: 'Sparkler send-off', event: 'Walima · Karachi', w: 1200, h: 801, wide: true },
+  { src: '/images/gallery-08.webp', alt: 'Newlyweds dancing under twinkling lights surrounded by guests holding sparklers', category: 'candid', caption: 'Sparkler send-off', event: 'Walima · Karachi', w: 1200, h: 801 },
   { src: '/images/gallery-07.webp', alt: 'Close-up of a couple’s hands during a wedding ritual with henna art', category: 'details', caption: 'The ritual', event: 'Mehndi · Faisalabad', w: 1200, h: 1500 },
   { src: '/images/gallery-12.webp', alt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion', category: 'ceremony', caption: 'The portrait', event: 'Baraat · Lahore', w: 1200, h: 1800 },
   { src: '/images/gallery-09.webp', alt: 'Sunset-lit outdoor wedding reception setup with adorned tables and chairs', category: 'details', caption: 'The setting', event: 'Walima · Islamabad', w: 1200, h: 1480 },
-  { src: '/images/gallery-11.webp', alt: 'Outdoor evening event space lit with fairy lights and draped curtains', category: 'details', caption: 'A thousand lights', event: 'Qawwali Night · Lahore', w: 1200, h: 800, wide: true },
+  { src: '/images/gallery-11.webp', alt: 'Outdoor evening event space lit with fairy lights and draped curtains', category: 'details', caption: 'A thousand lights', event: 'Qawwali Night · Lahore', w: 1200, h: 800 },
   { src: '/images/gallery-13.webp', alt: 'Traditional couple in classic wedding attire sharing a joyful moment indoors', category: 'ceremony', caption: 'Laughter, kept', event: 'Nikkah · Karachi', w: 1200, h: 1800 },
   { src: '/images/gallery-10.webp', alt: 'Lavish wedding table with floral arrangements and hanging lights', category: 'details', caption: 'Table for two hundred', event: 'Walima · Lahore', w: 1200, h: 1798 },
   { src: '/images/gallery-14.webp', alt: 'Couple in traditional attire holding hands outdoors during their wedding photoshoot', category: 'ceremony', caption: 'Walking together', event: 'Baraat · Hunza', w: 1200, h: 1799 },
@@ -37,7 +36,7 @@ const filters = [
 ];
 ---
 
-<div>
+<div class="reveal-up">
   <!-- Filter chips -->
   <div class="flex flex-wrap items-center gap-2 sm:gap-3" role="group" aria-label="Filter portfolio photos">
     {filters.map((f) => (
@@ -63,7 +62,7 @@ const filters = [
         role="button"
         aria-label={`View photo: ${p.caption} — ${p.event}`}
       >
-        <div class={p.wide ? 'aspect-[3/2] lg:col-span-1' : 'aspect-[3/4]'} data-lightbox-trigger data-full={p.src} data-alt={p.alt} data-caption={`${p.caption} — ${p.event}`}>
+        <div class="aspect-[3/4]" data-lightbox-trigger data-full={p.src} data-alt={p.alt} data-caption={`${p.caption} — ${p.event}`}>
           <img
             src={p.src}
             alt={p.alt}
