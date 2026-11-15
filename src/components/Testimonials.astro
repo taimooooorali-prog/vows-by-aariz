@@ -28,19 +28,19 @@ const testimonials = [
 
 <div class="grid gap-5 md:grid-cols-3">
   {testimonials.map((t) => (
-    <figure class="reveal-up flex flex-col rounded-2xl border border-sand bg-white/60 p-7 shadow-card sm:p-8">
-      <Quote size={28} class="text-gold" aria-hidden="true" />
+    <figure class="reveal-up flex flex-col rounded-2xl border border-hairline bg-white/60 p-7 shadow-card sm:p-8">
+      <Quote size={28} class="text-bronze" aria-hidden="true" />
       <div class="mt-4 flex gap-1" aria-label="Rated 5 out of 5 stars">
         {Array.from({ length: 5 }).map(() => (
-          <Star size={16} class="fill-gold text-gold" aria-hidden="true" />
+          <Star size={16} class="fill-bronze text-bronze" aria-hidden="true" />
         ))}
       </div>
-      <blockquote class="mt-4 flex-1 leading-relaxed text-cocoa">“{t.quote}”</blockquote>
-      <figcaption class="mt-6 flex items-center gap-3 border-t border-sand pt-5">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-espresso font-display text-sm italic text-goldlight" aria-hidden="true">{t.initials}</span>
+      <blockquote class="mt-4 flex-1 leading-relaxed text-ink">“{t.quote}”</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3 border-t border-hairline pt-5">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink font-display text-sm italic text-bronzelight" aria-hidden="true">{t.initials}</span>
         <span>
           <span class="block font-bold">{t.names}</span>
-          <span class="block text-sm text-smoke">{t.city}</span>
+          <span class="block text-sm text-muted">{t.city}</span>
         </span>
       </figcaption>
     </figure>

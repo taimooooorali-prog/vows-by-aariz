@@ -7,12 +7,12 @@ const cities = ['Lahore', 'Karachi', 'Islamabad', 'Somewhere else in Pakistan'];
     <div>
       <label for="field-name" class="mb-1.5 block text-sm font-bold">Your names</label>
       <input id="field-name" name="name" type="text" required autocomplete="name" placeholder="Ayesha & Bilal"
-        class="w-full rounded-lg border border-sand bg-white px-4 py-3 text-espresso placeholder:text-smoke/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" />
+        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
     </div>
     <div>
       <label for="field-contact" class="mb-1.5 block text-sm font-bold">Phone or email</label>
       <input id="field-contact" name="contact" type="text" required autocomplete="tel" placeholder="03xx xxxxxxx"
-        class="w-full rounded-lg border border-sand bg-white px-4 py-3 text-espresso placeholder:text-smoke/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" />
+        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
     </div>
   </div>
 
@@ -20,12 +20,12 @@ const cities = ['Lahore', 'Karachi', 'Islamabad', 'Somewhere else in Pakistan'];
     <div>
       <label for="field-date" class="mb-1.5 block text-sm font-bold">Event date</label>
       <input id="field-date" name="date" type="date"
-        class="w-full rounded-lg border border-sand bg-white px-4 py-3 text-espresso focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" />
+        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30" />
     </div>
     <div>
       <label for="field-city" class="mb-1.5 block text-sm font-bold">City</label>
       <select id="field-city" name="city"
-        class="w-full rounded-lg border border-sand bg-white px-4 py-3 text-espresso focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30">
+        class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30">
         {cities.map((c) => <option value={c}>{c}</option>)}
       </select>
     </div>
@@ -34,7 +34,7 @@ const cities = ['Lahore', 'Karachi', 'Islamabad', 'Somewhere else in Pakistan'];
   <div>
     <label for="field-package" class="mb-1.5 block text-sm font-bold">Package you’re considering</label>
     <select id="field-package" name="package"
-      class="w-full rounded-lg border border-sand bg-white px-4 py-3 text-espresso focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30">
+      class="w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30">
       <option value="Not sure yet">Not sure yet — help me choose</option>
       <option value="Essential — PKR 85,000">Essential — PKR 85,000</option>
       <option value="Signature — PKR 150,000">Signature — PKR 150,000</option>
@@ -45,16 +45,16 @@ const cities = ['Lahore', 'Karachi', 'Islamabad', 'Somewhere else in Pakistan'];
   <div>
     <label for="field-message" class="mb-1.5 block text-sm font-bold">Tell us about your celebration</label>
     <textarea id="field-message" name="message" rows="4" placeholder="Two events in Lahore — mehndi at home, baraat at a marquee. About 300 guests…"
-      class="w-full resize-y rounded-lg border border-sand bg-white px-4 py-3 text-espresso placeholder:text-smoke/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"></textarea>
+      class="w-full resize-y rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-bronze focus:outline-none focus:ring-2 focus:ring-bronze/30"></textarea>
   </div>
 
   <p id="form-error" class="hidden rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800" role="alert"></p>
 
   <button type="submit"
-    class="btn-shine magnetic w-full rounded-full bg-espresso px-8 py-4 text-base font-bold text-ivory shadow-soft transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto">
+    class="btn-shine magnetic w-full rounded-full bg-ink px-8 py-4 text-base font-bold text-white shadow-soft transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto">
     Send booking enquiry →
   </button>
-  <p class="text-sm leading-relaxed text-smoke">
+  <p class="text-sm leading-relaxed text-muted">
     This opens your email app with the enquiry pre-filled — no account or backend needed.
     Prefer WhatsApp? Use the green button beside this form. We reply within 24 hours.
   </p>
