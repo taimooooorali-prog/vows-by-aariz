@@ -9,7 +9,7 @@ export default {
         ink: '#1A1A1A',
         muted: '#666666',
         hairline: '#E7E7E2',
-        bronze: '#96784A',
+        bronze: '#7A5F38',
         bronzelight: '#C9A97E',
         bronzedark: '#7A5F38',
       },
