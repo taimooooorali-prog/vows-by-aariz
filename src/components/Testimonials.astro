@@ -1,0 +1,48 @@
+---
+import { Star, Quote } from 'lucide-astro';
+
+const testimonials = [
+  {
+    quote:
+      'Aariz didn’t just take photos — he caught the moments we didn’t even see happening. My mother crying during the rukhsati, my father’s laugh, the chaos of the baraat. We relive our wedding every time we open the gallery.',
+    names: 'Ayesha & Bilal',
+    city: 'Lahore · Signature Package',
+    initials: 'AB',
+  },
+  {
+    quote:
+      'We were nervous in front of the camera. Within ten minutes it felt like a friend was just hanging out with us. The teaser film made our whole family cry — twice. Worth every rupee, and then some.',
+    names: 'Mahnoor & Hamza',
+    city: 'Karachi · Royal Package',
+    initials: 'MH',
+  },
+  {
+    quote:
+      'Professional from the first call to the final album. On time, invisible when it mattered, and everywhere when it counted. The drone shots of our Islamabad venue at dusk are the ones everyone asks about.',
+    names: 'Zara & Daniyal',
+    city: 'Islamabad · Essential Package',
+    initials: 'ZD',
+  },
+];
+---
+
+<div class="grid gap-5 md:grid-cols-3">
+  {testimonials.map((t) => (
+    <figure class="reveal-up flex flex-col rounded-2xl border border-sand bg-white/60 p-7 shadow-card sm:p-8">
+      <Quote size={28} class="text-gold" aria-hidden="true" />
+      <div class="mt-4 flex gap-1" aria-label="Rated 5 out of 5 stars">
+        {Array.from({ length: 5 }).map(() => (
+          <Star size={16} class="fill-gold text-gold" aria-hidden="true" />
+        ))}
+      </div>
+      <blockquote class="mt-4 flex-1 leading-relaxed text-cocoa">“{t.quote}”</blockquote>
+      <figcaption class="mt-6 flex items-center gap-3 border-t border-sand pt-5">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-espresso font-display text-sm italic text-goldlight" aria-hidden="true">{t.initials}</span>
+        <span>
+          <span class="block font-bold">{t.names}</span>
+          <span class="block text-sm text-smoke">{t.city}</span>
+        </span>
+      </figcaption>
+    </figure>
+  ))}
+</div>
