@@ -30,33 +30,44 @@ static and also works on Netlify or any static host (upload `dist/`).
 
 | What | Where |
 | --- | --- |
-| Brand name, photographer name, tagline | `src/pages/index.astro`, `src/layouts/BaseLayout.astro` |
-| Phone / email / WhatsApp number | `src/pages/index.astro` (contact section, footer), `src/components/ContactForm.astro` (mailto target in `src/scripts/site.js`) |
-| Packages & prices | `src/pages/index.astro` (`packages` array) |
+| Brand name, photographer name, tagline | `src/components/Header.astro`, `src/components/Footer.astro`, `src/components/HeroSlider.astro`, `src/layouts/BaseLayout.astro` |
+| Phone / email / WhatsApp number | `src/components/Footer.astro`, `src/pages/index.astro` (contact section), `src/scripts/site.js` (mailto target), `src/layouts/BaseLayout.astro` (JSON-LD) |
+| Services, prices, event couples, mega-menu links | `src/data/site.ts` (single source of truth) |
 | Testimonials | `src/components/Testimonials.astro` |
-| Stats (weddings / years / cities / rating) | `src/pages/index.astro` (stats section) + JSON-LD in `src/layouts/BaseLayout.astro` |
-| Photos | Replace files in `public/images/` (keep names, or update the arrays in `src/pages/index.astro` and `src/components/Gallery.astro`) |
+| About story + team names/roles | `src/components/AboutSection.astro` |
+| Award badges | `src/components/AwardsRow.astro` (original dummy SVG seals) |
+| Photos / hero slides | Replace files in `public/images/` (keep names, or update `src/data/site.ts` and `src/components/HeroSlider.astro`) |
+| Showreel video + poster | `public/videos/showreel.mp4`, `public/images/showreel-poster.webp`, `src/components/AlbumsSection.astro` |
 | Site URL / canonical / OG | `astro.config.mjs` (`site`), `src/layouts/BaseLayout.astro`, `public/robots.txt`, `public/sitemap.xml` |
-| FAQ answers | `src/components/Faq.astro` |
-| Footer credits + demo notice | `src/pages/index.astro` (footer) — remove the demo notice for a real client |
+| Footer credits + demo notice | `src/components/Footer.astro` — remove the demo notice for a real client |
+| Palette / fonts | `tailwind.config.mjs`, `src/styles/global.css`, `public/fonts/` |
 
 ## Project structure
 
 ```text
 public/
-  images/            18 WebP photos + og-image.jpg (all local, no hotlinks)
-  favicon.svg        Custom aperture/V monogram
+  images/            22 WebP photos + og-image.jpg (all local, no hotlinks)
+  videos/            showreel.mp4 (demo Pexels clip, 720p, 1.9 MB)
+  fonts/             EB Garamond + Inter, self-hosted variable woff2
+  favicon.svg        Custom aperture monogram (cream/blush on near-black)
   robots.txt         sitemap.xml
 src/
-  layouts/BaseLayout.astro   SEO head, fonts, JSON-LD
-  pages/index.astro          All sections, content arrays
-  components/                Gallery (+lightbox), Faq, Testimonials, ContactForm
-  scripts/site.js            GSAP motion, filters, lightbox, FAQ, form
-  styles/global.css          Tokens, @font-face, marquee, accordion, reduced-motion
+  data/site.ts                 Services, gallery, events, mega-menus (shared)
+  layouts/BaseLayout.astro     SEO head, fonts, hero preload, JSON-LD
+  pages/index.astro            Page assembly + contact section
+  components/                  Header (+mega-menus, mobile menu), HeroSlider,
+                               AwardsRow, Gallery (slider), ServicesShowcase,
+                               AboutSection, PricesList, EventsGrid,
+                               Testimonials, AlbumsSection, ContactForm,
+                               Footer, Lightbox
+  scripts/site.js              Header state, menus, sliders, lightbox,
+                               GSAP reveals/parallax, form
+  styles/global.css            Tokens, @font-face, hover language, sliders,
+                               mega-menus, reduced-motion
 ```
 
 ## Credits
 
-Demo photography via
+Demo photography and showreel footage via
 [Pexels](https://www.pexels.com/) (free license). Fonts: EB Garamond + Inter
 (self-hosted variable woff2, OFL). Icons: Lucide.
