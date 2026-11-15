@@ -56,14 +56,11 @@ const filters = [
   <div id="gallery-grid" class="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
     {photos.map((p, i) => (
       <figure
-        class="gallery-item group relative cursor-pointer overflow-hidden rounded-xl bg-soft focus-within:ring-2 focus-within:ring-bronze"
+        class="gallery-item group relative overflow-hidden rounded-xl bg-soft focus-within:ring-2 focus-within:ring-bronze"
         data-category={p.category}
         data-index={i}
-        tabindex="0"
-        role="button"
-        aria-label={`View photo: ${p.caption} — ${p.event}`}
       >
-        <div class="aspect-[3/4]" data-lightbox-trigger data-full={p.src} data-alt={p.alt} data-caption={`${p.caption} — ${p.event}`}>
+        <button type="button" class="block aspect-[3/4] w-full cursor-pointer appearance-none border-0 bg-transparent p-0 text-left" data-lightbox-trigger data-full={p.src} data-alt={p.alt} data-caption={`${p.caption} — ${p.event}`} aria-label={`View photo: ${p.caption} — ${p.event}`}>
           <img
             src={p.src}
             alt={p.alt}
@@ -73,7 +70,7 @@ const filters = [
             decoding="async"
             class="h-full w-full object-cover"
           />
-        </div>
+        </button>
         <figcaption class="gallery-caption pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-ink/80 via-ink/35 to-transparent p-4 pt-12 text-left sm:p-5 sm:pt-16">
           <span>
             <span class="block font-display text-lg italic text-white sm:text-xl">{p.caption}</span>

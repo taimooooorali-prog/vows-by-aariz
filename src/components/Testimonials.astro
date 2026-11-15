@@ -30,7 +30,7 @@ const testimonials = [
   {testimonials.map((t) => (
     <figure class="reveal-up flex flex-col rounded-2xl border border-hairline bg-white/60 p-7 shadow-card sm:p-8">
       <Quote size={28} class="text-bronze" aria-hidden="true" />
-      <div class="mt-4 flex gap-1" aria-label="Rated 5 out of 5 stars">
+      <div class="mt-4 flex gap-1" role="img" aria-label="Rated 5 out of 5 stars">
         {Array.from({ length: 5 }).map(() => (
           <Star size={16} class="fill-bronze text-bronze" aria-hidden="true" />
         ))}
