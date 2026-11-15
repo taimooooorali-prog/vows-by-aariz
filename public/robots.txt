@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vows-by-aariz.vercel.app/sitemap.xml
