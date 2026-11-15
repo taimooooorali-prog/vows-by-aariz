@@ -1,0 +1,578 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Gallery from '../components/Gallery.astro';
+import Faq from '../components/Faq.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ContactForm from '../components/ContactForm.astro';
+import {
+  Aperture, ArrowDown, ArrowRight, BookOpen, CalendarCheck, Camera, Check,
+  Clapperboard, Clock, Heart, Images, Mail, MapPin, MessageCircle, PenLine,
+  Phone, Sparkles, Star,
+} from 'lucide-astro';
+
+const services = [
+  {
+    icon: Camera,
+    title: 'Photography',
+    text: 'Documentary coverage with an editorial eye — the stolen glances, the happy tears, the baraat in full flight. Every frame hand-edited in our warm signature style.',
+    points: ['Full-day & multi-event coverage', '300–1000+ edited photos', 'Private online gallery'],
+  },
+  {
+    icon: Clapperboard,
+    title: 'Cinematic Films',
+    text: 'Your wedding as a film, not a recording. A 60–90 second teaser for sharing, and a full-length feature film scored to music that feels like your story.',
+    points: ['Teaser + feature film', 'Licensed music', 'Drone coverage available'],
+  },
+  {
+    icon: Heart,
+    title: 'Pre-wedding Shoots',
+    text: 'Relaxed couple sessions before the big day — at a haveli, in the hills, or over chai at your favourite dhaba. The perfect way to get comfortable in front of the lens.',
+    points: ['1–2 hour sessions', '2 outfits, 1 location', '50+ edited photos'],
+  },
+  {
+    icon: BookOpen,
+    title: 'Albums & Prints',
+    text: 'Museum-grade albums your grandchildren will fight over. Lay-flat pages, linen covers, and prints that hold their colour for decades — designed, never templated.',
+    points: ['Premium & luxury albums', 'Parents’ mini albums', 'Fine-art prints'],
+  },
+];
+
+const packages = [
+  {
+    name: 'Essential',
+    price: 'PKR 85,000',
+    tagline: 'One perfect event, beautifully kept.',
+    features: [
+      '1 event · up to 6 hours',
+      '300+ hand-edited photos',
+      '1 photographer',
+      'Private online gallery',
+      'Sneak peek in 48 hours',
+      'Delivery in 3 weeks',
+    ],
+    featured: false,
+    cta: 'Choose Essential',
+  },
+  {
+    name: 'Signature',
+    price: 'PKR 150,000',
+    tagline: 'The full story, two events deep.',
+    features: [
+      '2 events · up to 8 hours each',
+      '600+ hand-edited photos',
+      'Cinematic teaser film (60–90s)',
+      'Premium 30-page album',
+      'Photographer + assistant',
+      'Priority delivery in 2 weeks',
+    ],
+    featured: true,
+    cta: 'Choose Signature',
+  },
+  {
+    name: 'Royal',
+    price: 'PKR 250,000',
+    tagline: 'Every moment, from every angle.',
+    features: [
+      '3 events · full-day coverage',
+      '1000+ hand-edited photos',
+      'Full cinematic film + teaser',
+      '2 photographers + drone',
+      'Luxury album + parents’ albums',
+      'Same-week sneak peek',
+    ],
+    featured: false,
+    cta: 'Choose Royal',
+  },
+];
+
+const processSteps = [
+  { icon: CalendarCheck, title: 'Book a call', text: 'A free 20-minute video call. Tell us about your events, your people, your must-have shots. No pressure, no obligation — we only take weddings we love.' },
+  { icon: PenLine, title: 'Plan your story', text: 'Together we build a shot list, a timeline, and a mood board. Venue visits, family-group planning, and every detail agreed before the day — so the day itself is effortless.' },
+  { icon: Sparkles, title: 'The big day', text: 'We arrive early, stay late, and blend in. Candid when it matters, directed when it counts. You celebrate; we carry the cameras, the backup gear, and the calm.' },
+  { icon: Images, title: 'Gallery & film', text: 'Sneak peeks in 48 hours, your full gallery in weeks, your film soon after. Delivered in a private online gallery you can share with family anywhere in the world.' },
+];
+
+const marqueeWords = ['Mehndi', 'Baraat', 'Nikkah', 'Rukhsati', 'Walima', 'Qawwali Night', 'Dholki', 'Engagement'];
+const credits =
+  'IN STORY, Danik Prihodko, Stephen Leonardi, Sabir Khan Shourov, Agung Pandit Wiguna, Habib Hosseini, kabita Darlami, Rina Islam, Buse Çolak, Pk Photography, Arto Suraj, Samet Tecimen, The Visionary Vows, Fliqa India, khezez, the Amritdev, Leeloo The First, Magda Ehlers';
+---
+
+<BaseLayout
+  title="Vows by Aariz — Wedding Photographer in Lahore, Pakistan"
+  description="Vows by Aariz is a Lahore wedding photographer capturing shaadis across Pakistan — documentary photography, cinematic films, pre-wedding shoots and luxury albums. 250+ weddings, 8 years, 5.0 rating."
+>
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[90] focus:rounded-full focus:bg-espresso focus:px-5 focus:py-2 focus:text-ivory">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+      <a href="#top" class="flex items-center gap-2.5" aria-label="Vows by Aariz — home">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-espresso text-goldlight"><Aperture size={20} /></span>
+        <span class="font-display text-xl font-medium leading-none tracking-tight sm:text-2xl">Vows <span class="italic text-gold">by Aariz</span></span>
+      </a>
+      <nav class="hidden items-center gap-8 text-sm font-semibold lg:flex" aria-label="Main navigation">
+        <a class="transition-colors hover:text-gold" href="#portfolio">Portfolio</a>
+        <a class="transition-colors hover:text-gold" href="#services">Services</a>
+        <a class="transition-colors hover:text-gold" href="#packages">Packages</a>
+        <a class="transition-colors hover:text-gold" href="#stories">Stories</a>
+        <a class="transition-colors hover:text-gold" href="#faq">FAQ</a>
+      </nav>
+      <a href="#book" class="btn-shine magnetic rounded-full bg-espresso px-5 py-2.5 text-sm font-bold text-ivory shadow-card transition-transform duration-300 hover:-translate-y-0.5 sm:px-6 sm:py-3">
+        Book a Call
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section id="top" class="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <div class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-sand/50 blur-3xl" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -left-40 top-1/2 h-80 w-80 rounded-full bg-cream blur-3xl" aria-hidden="true"></div>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-7">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span>
+            Wedding Photographer · Lahore, Pakistan
+          </p>
+          <h1 class="mt-6 font-display text-[13.5vw] font-light leading-[0.98] tracking-tight sm:text-7xl lg:text-[5.4rem]">
+            <span class="split-line">Your shaadi,</span>
+            <span class="split-line">told <em class="font-normal italic text-gold">beautifully.</em></span>
+          </h1>
+          <p class="reveal-up mt-6 max-w-xl text-lg leading-relaxed text-smoke">
+            Every glance. Every tear. Every dance. Kept forever. Documentary wedding
+            photography and cinematic films for couples who want to <span class="font-semibold text-espresso">feel</span> their wedding again — not just see it.
+          </p>
+          <div class="reveal-up mt-9 flex flex-wrap items-center gap-4">
+            <a href="#portfolio" class="btn-shine magnetic group inline-flex items-center gap-2 rounded-full bg-espresso px-7 py-3.5 font-bold text-ivory shadow-soft transition-transform duration-300 hover:-translate-y-0.5">
+              View the Portfolio
+              <ArrowRight size={18} class="transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+            <a href="#book" class="magnetic inline-flex items-center gap-2 rounded-full border-2 border-espresso px-7 py-3.5 font-bold transition-colors duration-300 hover:bg-espresso hover:text-ivory">
+              Check Availability
+            </a>
+          </div>
+          <div class="reveal-up mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+            <span class="flex items-center gap-2">
+              <span class="flex gap-0.5" aria-hidden="true">
+                {Array.from({ length: 5 }).map(() => <Star size={15} class="fill-gold text-gold" />)}
+              </span>
+              <strong>5.0</strong> from 87 couples
+            </span>
+            <span class="hidden h-4 w-px bg-sand sm:block" aria-hidden="true"></span>
+            <span class="flex items-center gap-1.5 text-smoke"><MapPin size={15} class="text-gold" /> Lahore · Karachi · Islamabad</span>
+          </div>
+        </div>
+
+        <div class="relative lg:col-span-5">
+          <div class="reveal-img relative mx-auto max-w-md lg:max-w-none" data-parallax-wrap>
+            <div class="absolute -inset-3 rounded-t-full rounded-b-[2rem] border border-gold/60" aria-hidden="true"></div>
+            <img
+              src="/images/hero.webp"
+              alt="Bride in a vibrant red lehenga and groom in a pink turban smiling at their Pakistani wedding"
+              width="1920"
+              height="2569"
+              fetchpriority="high"
+              decoding="async"
+              data-parallax
+              class="relative aspect-[3/4] w-full rounded-t-full rounded-b-[2rem] object-cover shadow-soft"
+            />
+            <div class="absolute -bottom-5 -left-3 rounded-2xl border border-sand bg-ivory/95 px-5 py-4 shadow-card backdrop-blur sm:-left-8">
+              <p class="font-display text-3xl font-medium leading-none">250<span class="text-gold">+</span></p>
+              <p class="mt-1 text-xs font-bold uppercase tracking-widest text-smoke">Weddings told</p>
+            </div>
+            <div class="absolute -right-2 top-10 rotate-3 rounded-full bg-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-white shadow-card sm:-right-4">
+              Now booking 2027
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex justify-center lg:mt-20">
+        <a href="#stats" class="flex flex-col items-center gap-2 text-xs font-bold uppercase tracking-widest2 text-smoke transition-colors hover:text-gold" aria-label="Scroll to learn more">
+          Scroll
+          <ArrowDown size={16} class="animate-bounce text-gold" />
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee mt-14 overflow-hidden bg-espresso py-4 lg:mt-16" aria-hidden="true">
+      <div class="marquee-track flex w-max items-center gap-8 whitespace-nowrap pr-8">
+        {[...marqueeWords, ...marqueeWords].map((w) => (
+          <span class="flex items-center gap-8 font-display text-xl italic text-ivory/90 sm:text-2xl">
+            {w} <span class="text-sm not-italic text-gold">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- ============ STATS ============ -->
+    <section id="stats" class="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-20">
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+        {[
+          { value: 250, suffix: '+', label: 'Weddings photographed', decimals: 0 },
+          { value: 8, suffix: '', label: 'Years behind the lens', decimals: 0 },
+          { value: 40, suffix: '+', label: 'Cities across Pakistan', decimals: 0 },
+          { value: 5.0, suffix: '', label: 'Average couple rating', decimals: 1 },
+        ].map((s) => (
+          <div class="reveal-up flex flex-col border-l-2 border-gold/50 pl-5">
+            <dt class="order-2 mt-2 text-sm font-semibold uppercase tracking-wider text-smoke">{s.label}</dt>
+            <dd class="order-1 font-display text-5xl font-light sm:text-6xl">
+              <span class="counter" data-count={s.value} data-decimals={s.decimals}>{s.decimals ? s.value.toFixed(1) : s.value}</span><span class="text-gold">{s.suffix}</span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="bg-cream/60 py-20 lg:py-28">
+      <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+        <div class="reveal-left relative order-2 lg:order-1">
+          <div class="reveal-img relative">
+            <img
+              src="/images/about.webp"
+              alt="Newlyweds in traditional attire embracing under twinkling lights"
+              width="1200"
+              height="1800"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[3/4] w-full rounded-[2rem] object-cover shadow-soft"
+            />
+            <div class="absolute -bottom-6 -right-3 rounded-2xl bg-espresso px-6 py-4 text-ivory shadow-soft sm:-right-6">
+              <p class="font-display text-lg italic leading-snug">“I shoot the wedding<br />I’d want to remember.”</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 01 — The Photographer
+          </p>
+          <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+            Hi, I’m Aariz. <em class="italic text-gold">I don’t pose weddings — I witness them.</em>
+          </h2>
+          <div class="reveal-up mt-6 space-y-4 leading-relaxed text-smoke">
+            <p>
+              Eight years ago I photographed my cousin’s mehndi with a borrowed camera and
+              missed half the dances because I was crying behind the lens. I’ve been chasing
+              that feeling ever since — across 250+ shaadis, from Lahore marquees to Hunza valleys.
+            </p>
+            <p>
+              My style sits between documentary and editorial: honest, unposed moments, composed
+              like the magazine spreads you grew up loving. Warm skin tones, real laughter, and
+              not a single awkward “stand there and smile” unless you ask for it.
+            </p>
+          </div>
+          <ul class="reveal-up mt-8 space-y-3">
+            {['Backup cameras, lenses & cards on every event — always', 'A second shooter available for large multi-day weddings', 'Edited in-house by me, never outsourced'].map((item) => (
+              <li class="flex items-start gap-3 font-medium">
+                <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold"><Check size={14} /></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p class="reveal-up mt-8 font-display text-3xl italic text-espresso">— Aariz Ahmed</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IMAGE BAND ============ -->
+    <section class="relative flex h-[420px] items-center justify-center overflow-hidden sm:h-[480px]" aria-label="A wedding couple in a moody landscape">
+      <img
+        src="/images/band.webp"
+        alt=""
+        width="1920"
+        height="1280"
+        loading="lazy"
+        decoding="async"
+        data-parallax-band
+        class="absolute inset-0 h-[120%] w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-espresso/55" aria-hidden="true"></div>
+      <blockquote class="relative max-w-3xl px-5 text-center">
+        <p class="reveal-up font-display text-3xl font-light italic leading-snug text-ivory sm:text-5xl">
+          “Every glance. Every tear. Every dance. Kept forever.”
+        </p>
+        <cite class="reveal-up mt-5 block text-xs font-bold uppercase tracking-widest2 not-italic text-goldlight">The Vows by Aariz promise</cite>
+      </blockquote>
+    </section>
+
+    <!-- ============ PORTFOLIO ============ -->
+    <section id="portfolio" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 02 — Portfolio
+          </p>
+          <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+            Recent shaadis, <em class="italic text-gold">honestly told.</em>
+          </h2>
+          <p class="reveal-up mt-4 leading-relaxed text-smoke">
+            No stock poses, no stiff line-ups. These are real moments from real celebrations —
+            tap any photo to see it full-screen.
+          </p>
+        </div>
+        <p class="reveal-up hidden font-display text-6xl font-light text-sand lg:block" aria-hidden="true">’19—’26</p>
+      </div>
+      <div class="reveal-up mt-10">
+        <Gallery />
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section id="services" class="bg-cream/60 py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="max-w-2xl">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 03 — Services
+          </p>
+          <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+            Everything your story needs. <em class="italic text-gold">Nothing it doesn’t.</em>
+          </h2>
+        </div>
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s, i) => (
+            <article class="reveal-up group flex flex-col rounded-2xl border border-sand bg-ivory p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/50 hover:shadow-soft">
+              <div class="flex items-start justify-between">
+                <span class="flex h-12 w-12 items-center justify-center rounded-full bg-espresso text-goldlight transition-colors duration-500 group-hover:bg-gold group-hover:text-white">
+                  <s.icon size={22} />
+                </span>
+                <span class="font-display text-4xl font-light text-sand" aria-hidden="true">0{i + 1}</span>
+              </div>
+              <h3 class="mt-6 font-display text-2xl font-medium">{s.title}</h3>
+              <p class="mt-3 flex-1 leading-relaxed text-smoke">{s.text}</p>
+              <ul class="mt-5 space-y-2 border-t border-sand pt-5 text-sm font-medium">
+                {s.points.map((pt) => (
+                  <li class="flex items-center gap-2"><Check size={15} class="shrink-0 text-gold" /> {pt}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PACKAGES ============ -->
+    <section id="packages" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="reveal-up flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+          <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 04 — Packages <span class="h-px w-10 bg-gold" aria-hidden="true"></span>
+        </p>
+        <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+          Honest pricing, <em class="italic text-gold">no hidden extras.</em>
+        </h2>
+        <p class="reveal-up mt-4 leading-relaxed text-smoke">
+          Every package includes a written agreement, backup equipment, and a sneak peek within 48 hours. Custom quotes for destination weddings.
+        </p>
+      </div>
+
+      <div class="mt-12 grid items-stretch gap-5 lg:grid-cols-3">
+        {packages.map((p) => (
+          <article
+            class={`reveal-up relative flex flex-col rounded-3xl p-8 sm:p-9 ${p.featured ? 'bg-espresso text-ivory shadow-soft lg:-my-4 lg:py-14' : 'border border-sand bg-white/60 shadow-card'}`}
+          >
+            {p.featured && (
+              <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white shadow-card">Most Popular</span>
+            )}
+            <h3 class="font-display text-2xl font-medium">{p.name}</h3>
+            <p class={`mt-1.5 text-sm ${p.featured ? 'text-ivory/70' : 'text-smoke'}`}>{p.tagline}</p>
+            <p class="mt-6 font-display text-4xl font-light sm:text-5xl">{p.price}</p>
+            <div class={`rule-gold mt-6 ${p.featured ? 'opacity-60' : ''}`} aria-hidden="true"></div>
+            <ul class="mt-6 flex-1 space-y-3">
+              {p.features.map((f) => (
+                <li class="flex items-start gap-3">
+                  <span class={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${p.featured ? 'bg-gold/25 text-goldlight' : 'bg-gold/15 text-gold'}`}><Check size={12} /></span>
+                  <span class="leading-snug">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#book"
+              class={`btn-shine magnetic mt-8 block rounded-full py-3.5 text-center font-bold transition-transform duration-300 hover:-translate-y-0.5 ${p.featured ? 'bg-gold text-white' : 'bg-espresso text-ivory'}`}
+            >
+              {p.cta}
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="reveal-up mt-8 text-center text-sm text-smoke">Need something different? A single mehndi, a two-city wedding, a full week of events — <a href="#book" class="font-bold text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">ask for a custom quote</a>.</p>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section id="process" class="bg-cream/60 py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid gap-12 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+              <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 05 — How it works
+            </p>
+            <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+              Four steps. <em class="italic text-gold">Zero stress.</em>
+            </h2>
+            <p class="reveal-up mt-4 leading-relaxed text-smoke">
+              Booking a wedding photographer should feel like the easiest decision of your
+              wedding — because with the right planning, it is.
+            </p>
+            <a href="#book" class="reveal-up btn-shine magnetic mt-8 inline-flex items-center gap-2 rounded-full bg-espresso px-7 py-3.5 font-bold text-ivory shadow-soft transition-transform duration-300 hover:-translate-y-0.5">
+              Start with step one <ArrowRight size={18} />
+            </a>
+          </div>
+          <ol class="relative space-y-10 border-l border-sand pl-8 lg:col-span-7 lg:col-start-6">
+            {processSteps.map((step, i) => (
+              <li class="reveal-up relative">
+                <span class="absolute -left-[3.4rem] flex h-11 w-11 items-center justify-center rounded-full border border-gold/50 bg-ivory text-gold shadow-card" aria-hidden="true">
+                  <step.icon size={20} />
+                </span>
+                <p class="text-xs font-bold uppercase tracking-widest2 text-gold">Step {i + 1}</p>
+                <h3 class="mt-1.5 font-display text-2xl font-medium">{step.title}</h3>
+                <p class="mt-2 max-w-xl leading-relaxed text-smoke">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section id="stories" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-8 lg:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 06 — Kind words
+          </p>
+          <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+            Couples who’d <em class="italic text-gold">book us again.</em>
+          </h2>
+        </div>
+        <p class="reveal-up flex items-center gap-2 text-sm font-semibold">
+          <span class="flex gap-0.5" aria-hidden="true">{Array.from({ length: 5 }).map(() => <Star size={15} class="fill-gold text-gold" />)}</span>
+          5.0 average · 87 reviews
+        </p>
+      </div>
+      <div class="mt-12">
+        <Testimonials />
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="mx-auto max-w-7xl scroll-mt-24 px-5 pb-20 sm:px-8 lg:pb-28">
+      <div class="grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-gold">
+            <span class="h-px w-10 bg-gold" aria-hidden="true"></span> 07 — Questions
+          </p>
+          <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+            Everything couples <em class="italic text-gold">ask us.</em>
+          </h2>
+          <p class="reveal-up mt-4 leading-relaxed text-smoke">
+            Something else on your mind? Message us — a human (usually Aariz) replies within a day.
+          </p>
+        </div>
+        <div class="reveal-up lg:col-span-8">
+          <Faq />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOOKING / CONTACT ============ -->
+    <section id="book" class="scroll-mt-24 px-5 pb-20 sm:px-8 lg:pb-28">
+      <div class="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-espresso text-ivory shadow-soft">
+        <img src="/images/cta-bg.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" aria-hidden="true" />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-espresso/60 via-espresso/40 to-espresso/85" aria-hidden="true"></div>
+
+        <div class="relative grid gap-12 p-7 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14">
+          <div>
+            <p class="reveal-up flex items-center gap-3 text-xs font-bold uppercase tracking-widest2 text-goldlight">
+              <span class="h-px w-10 bg-goldlight" aria-hidden="true"></span> 08 — Book your date
+            </p>
+            <h2 class="reveal-up mt-5 font-display text-4xl font-light leading-[1.05] tracking-tight sm:text-5xl">
+              Your date is booking fast. <em class="italic text-goldlight">Let’s talk.</em>
+            </h2>
+            <p class="reveal-up mt-4 max-w-md leading-relaxed text-ivory/75">
+              Tell us about your celebration and we’ll reply within 24 hours with availability
+              and a tailored quote. No obligation — just a conversation.
+            </p>
+
+            <ul class="reveal-up mt-9 space-y-4">
+              <li>
+                <a href="tel:+923000000000" class="group flex items-center gap-4">
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ivory/25 transition-colors group-hover:border-gold group-hover:bg-gold"><Phone size={18} /></span>
+                  <span><span class="block text-xs font-bold uppercase tracking-widest text-ivory/60">Call or text</span><span class="block font-bold">+92 300 0000000</span></span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:hello@vowsbyaariz.com" class="group flex items-center gap-4">
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ivory/25 transition-colors group-hover:border-gold group-hover:bg-gold"><Mail size={18} /></span>
+                  <span><span class="block text-xs font-bold uppercase tracking-widest text-ivory/60">Email</span><span class="block font-bold">hello@vowsbyaariz.com</span></span>
+                </a>
+              </li>
+              <li class="flex items-center gap-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ivory/25"><MapPin size={18} /></span>
+                <span><span class="block text-xs font-bold uppercase tracking-widest text-ivory/60">Based in</span><span class="block font-bold">Lahore · covering all of Pakistan</span></span>
+              </li>
+              <li class="flex items-center gap-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ivory/25"><Clock size={18} /></span>
+                <span><span class="block text-xs font-bold uppercase tracking-widest text-ivory/60">Replies within</span><span class="block font-bold">24 hours, 7 days a week</span></span>
+              </li>
+            </ul>
+
+            <a
+              href="https://wa.me/923000000000?text=Hi%20Aariz!%20We%27d%20love%20to%20check%20availability%20for%20our%20wedding."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="reveal-up magnetic mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-7 py-3.5 font-bold text-white shadow-soft transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <MessageCircle size={19} /> Chat on WhatsApp
+            </a>
+          </div>
+
+          <div class="reveal-up rounded-3xl bg-ivory p-6 text-espresso shadow-soft sm:p-8">
+            <h3 class="font-display text-2xl font-medium">Booking enquiry</h3>
+            <p class="mt-1.5 text-sm text-smoke">Two minutes. That’s all it takes.</p>
+            <div class="mt-6">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-sand bg-cream/60">
+    <div class="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+      <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+        <a href="#top" class="flex items-center gap-2.5" aria-label="Vows by Aariz — back to top">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-espresso text-goldlight"><Aperture size={20} /></span>
+          <span class="font-display text-2xl font-medium tracking-tight">Vows <span class="italic text-gold">by Aariz</span></span>
+        </a>
+        <nav class="flex flex-wrap gap-x-7 gap-y-2 text-sm font-semibold" aria-label="Footer navigation">
+          <a class="transition-colors hover:text-gold" href="#portfolio">Portfolio</a>
+          <a class="transition-colors hover:text-gold" href="#services">Services</a>
+          <a class="transition-colors hover:text-gold" href="#packages">Packages</a>
+          <a class="transition-colors hover:text-gold" href="#faq">FAQ</a>
+          <a class="transition-colors hover:text-gold" href="#book">Book a Call</a>
+        </nav>
+      </div>
+
+      <div class="mt-10 border-t border-sand pt-8 text-sm leading-relaxed text-smoke">
+        <p>
+          Demo photography by these artists via <a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Pexels</a>:
+          {credits}.
+        </p>
+        <p class="mt-4 rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 font-medium text-cocoa">
+          Demo content — this is a sample website with fictional placeholder details (name, phone, email, testimonials, prices). Replace with the real business details before publishing for a client.
+        </p>
+        <div class="mt-8 flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 Vows by Aariz. All rights reserved.</p>
+          <p>Lahore · Karachi · Islamabad · Pakistan</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    import '../scripts/site.js';
+  </script>
+</BaseLayout>
