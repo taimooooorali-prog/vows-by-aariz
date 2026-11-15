@@ -177,12 +177,36 @@ chips.forEach((chip) => {
     paintChips(chip);
     const key = chip.dataset.filter;
     let visible = 0;
+    const shown = [];
     galleryItems.forEach((item) => {
       const show = key === 'all' || item.dataset.category === key;
       item.classList.toggle('is-hidden', !show);
-      if (show) visible += 1;
+      if (show) {
+        visible += 1;
+        shown.push(item);
+      }
     });
     if (emptyNote) emptyNote.classList.toggle('hidden', visible > 0);
+    // Reset any stale inline reveal state, then fade reshown tiles in.
+    // Without this, tiles reshown by a filter switch can stay blank
+    // (stale opacity/transform + no re-trigger for in-view items).
+    gsap.killTweensOf(galleryItems);
+    gsap.set(galleryItems, { clearProps: 'opacity,transform' });
+    if (!prefersReducedMotion && shown.length) {
+      gsap.fromTo(
+        shown,
+        { opacity: 0, y: 14 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.04,
+          ease: 'power2.out',
+          overwrite: true,
+          clearProps: 'opacity,transform',
+        }
+      );
+    }
     ScrollTrigger.refresh();
   });
 });
@@ -220,8 +244,9 @@ const openLightbox = (trigger) => {
   document.body.style.overflow = 'hidden';
   document.getElementById('lightbox-close')?.focus();
   if (!prefersReducedMotion) {
-    gsap.fromTo(lightbox, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-    gsap.fromTo(lightboxImg, { scale: 0.96 }, { scale: 1, duration: 0.35, ease: 'power2.out' });
+    gsap.killTweensOf([lightbox, lightboxImg]);
+    gsap.fromTo(lightbox, { opacity: 0 }, { opacity: 1, duration: 0.3, overwrite: true, clearProps: 'opacity' });
+    gsap.fromTo(lightboxImg, { scale: 0.96 }, { scale: 1, duration: 0.35, ease: 'power2.out', overwrite: true, clearProps: 'transform' });
   }
 };
 
