@@ -4,166 +4,161 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const desktopMQ = window.matchMedia('(min-width: 1024px)');
 
 /* ============================================================
-   Motion (GSAP) — all initial states are set via JS only, so
-   content stays fully visible if JS or GSAP fails to load.
+   Subtle motion (GSAP) — initial states set via JS only, so
+   content stays fully visible if JS or GSAP fails.
    ============================================================ */
 if (!prefersReducedMotion) {
-  // --- Split-text hero headline: wrap words in spans, then reveal ---
-  document.querySelectorAll('.split-line').forEach((line) => {
-    const nodes = [...line.childNodes];
-    line.textContent = '';
-    nodes.forEach((node) => {
-      const words = [];
-      if (node.nodeType === Node.TEXT_NODE) {
-        node.textContent
-          .split(/\s+/)
-          .filter(Boolean)
-          .forEach((w) => {
-            const s = document.createElement('span');
-            s.className = 'split-word';
-            s.textContent = w;
-            words.push(s);
-          });
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const s = document.createElement('span');
-        s.className = 'split-word';
-        s.appendChild(node);
-        words.push(s);
-      }
-      words.forEach((w) => {
-        line.appendChild(w);
-        line.appendChild(document.createTextNode(' '));
-      });
-    });
-  });
-
-  gsap.from('.split-word', {
-    yPercent: 115,
-    duration: 1,
-    stagger: 0.07,
-    ease: 'power4.out',
-    delay: 0.15,
-  });
-
-  // --- Scroll entrances: alternate directions by class ---
-  const reveal = (selector, vars) => {
-    gsap.utils.toArray(selector).forEach((el) => {
-      gsap.from(el, {
-        ...vars,
-        duration: 0.9,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-      });
-    });
-  };
-  reveal('.reveal-up', { y: 36, opacity: 0 });
-  reveal('.reveal-left', { x: -44, opacity: 0 });
-  reveal('.reveal-right', { x: 44, opacity: 0 });
-
-  // --- Clip-path image reveals ---
-  gsap.utils.toArray('.reveal-img').forEach((el) => {
+  // Gentle fade-up for section headings / blocks (once each).
+  gsap.utils.toArray('.reveal').forEach((el) => {
     gsap.from(el, {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 1.2,
-      ease: 'power4.inOut',
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-    });
-  });
-
-  // --- Subtle parallax: hero image + wide band (desktop-weighted) ---
-  const heroImg = document.querySelector('[data-parallax]');
-  if (heroImg) {
-    gsap.fromTo(
-      heroImg,
-      { yPercent: -3, scale: 1.08 },
-      {
-        yPercent: 3,
-        scale: 1.08,
-        ease: 'none',
-        scrollTrigger: { trigger: '[data-parallax-wrap]', start: 'top top', end: 'bottom top', scrub: true },
-      }
-    );
-  }
-  const bandImg = document.querySelector('[data-parallax-band]');
-  if (bandImg) {
-    gsap.fromTo(
-      bandImg,
-      { yPercent: -10 },
-      {
-        yPercent: 0,
-        ease: 'none',
-        scrollTrigger: { trigger: bandImg.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-      }
-    );
-  }
-
-  // --- Animated counters ---
-  gsap.utils.toArray('.counter').forEach((el) => {
-    const target = parseFloat(el.dataset.count || '0');
-    const decimals = parseInt(el.dataset.decimals || '0', 10);
-    const obj = { v: 0 };
-    gsap.to(obj, {
-      v: target,
-      duration: 1.8,
+      y: 16,
+      opacity: 0,
+      duration: 0.7,
       ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      onUpdate: () => {
-        el.textContent = obj.v.toFixed(decimals);
-      },
-      onComplete: () => {
-        el.textContent = target.toFixed(decimals);
-      },
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     });
   });
 
-  // --- Magnetic buttons (fine pointers only) ---
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.querySelectorAll('.magnetic').forEach((el) => {
-      el.addEventListener('mousemove', (e) => {
-        const r = el.getBoundingClientRect();
-        gsap.to(el, {
-          x: (e.clientX - r.left - r.width / 2) * 0.18,
-          y: (e.clientY - r.top - r.height / 2) * 0.18,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      });
-      el.addEventListener('mouseleave', () => {
-        gsap.to(el, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.5)' });
-      });
+  // Services showcase: subtle scroll-linked parallax, desktop only.
+  // Different speeds per column, ±6% max.
+  if (desktopMQ.matches) {
+    document.querySelectorAll('[data-parallax-block]').forEach((block) => {
+      const colA = block.querySelector('[data-parallax-col="a"]');
+      const colB = block.querySelector('[data-parallax-col="b"]');
+      if (colA) {
+        gsap.fromTo(
+          colA,
+          { yPercent: 3 },
+          {
+            yPercent: -3,
+            ease: 'none',
+            scrollTrigger: { trigger: block, start: 'top bottom', end: 'bottom top', scrub: true },
+          }
+        );
+      }
+      if (colB) {
+        gsap.fromTo(
+          colB,
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: 'none',
+            scrollTrigger: { trigger: block, start: 'top bottom', end: 'bottom top', scrub: true },
+          }
+        );
+      }
     });
   }
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
 /* ============================================================
-   Header state on scroll
+   Header state: transparent + white text over the hero; solid
+   cream + dark text after ~95% of viewport height scrolled.
    ============================================================ */
 const header = document.getElementById('site-header');
 const setHeader = () => {
   if (!header) return;
-  const scrolled = window.scrollY > 40;
-  header.classList.toggle('bg-white/90', scrolled);
-  header.classList.toggle('backdrop-blur-md', scrolled);
-  header.classList.toggle('shadow-card', scrolled);
+  header.classList.toggle('is-scrolled', window.scrollY > window.innerHeight * 0.95);
 };
 setHeader();
 window.addEventListener('scroll', setHeader, { passive: true });
+window.addEventListener('resize', setHeader);
 
 /* ============================================================
-   Mobile menu (fixed overlay — no document reflow)
+   Mega menus (desktop, click to open)
+   ============================================================ */
+const megaTriggers = [...document.querySelectorAll('[data-mega-trigger]')];
+const megaPanels = [...document.querySelectorAll('[data-mega-panel]')];
+let openMegaKey = null;
+let megaScrollLocked = false;
+
+const lockScroll = () => {
+  if (megaScrollLocked) return;
+  megaScrollLocked = true;
+  document.body.style.overflow = 'hidden';
+};
+const unlockScroll = () => {
+  if (!megaScrollLocked) return;
+  megaScrollLocked = false;
+  document.body.style.overflow = '';
+};
+
+const closeMega = (refocusTrigger) => {
+  if (!openMegaKey) return;
+  const key = openMegaKey;
+  openMegaKey = null;
+  megaPanels.forEach((p) => p.classList.remove('is-open'));
+  megaTriggers.forEach((t) => {
+    t.setAttribute('aria-expanded', 'false');
+    t.classList.remove('is-open');
+  });
+  unlockScroll();
+  if (refocusTrigger) {
+    document.querySelector(`[data-mega-trigger="${key}"]`)?.focus();
+  }
+};
+
+const openMega = (key) => {
+  openMegaKey = key;
+  megaPanels.forEach((p) => p.classList.toggle('is-open', p.dataset.megaPanel === key));
+  megaTriggers.forEach((t) => {
+    const isActive = t.dataset.megaTrigger === key;
+    t.setAttribute('aria-expanded', String(isActive));
+    t.classList.toggle('is-open', isActive);
+  });
+  lockScroll();
+};
+
+megaTriggers.forEach((trigger) => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const key = trigger.dataset.megaTrigger;
+    if (openMegaKey === key) {
+      closeMega(false);
+    } else {
+      openMega(key);
+    }
+  });
+});
+
+// Clicking a panel link navigates AND closes the menu.
+megaPanels.forEach((panel) => {
+  panel.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => closeMega(false));
+  });
+});
+
+// Click outside the header closes; Escape closes and refocuses.
+document.addEventListener('click', (e) => {
+  if (openMegaKey && header && !header.contains(e.target)) closeMega(false);
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && openMegaKey) closeMega(true);
+});
+desktopMQ.addEventListener('change', (e) => {
+  if (!e.matches) closeMega(false);
+});
+
+/* ============================================================
+   Mobile menu (fixed overlay) + accordions
    ============================================================ */
 const menuOpenBtn = document.getElementById('mobile-menu-open');
 const menuPanel = document.getElementById('mobile-menu');
 const menuCloseBtn = document.getElementById('mobile-menu-close');
+let menuScrollLocked = false;
 
 const openMenu = () => {
   if (!menuPanel) return;
   menuPanel.hidden = false;
   menuPanel.classList.remove('hidden');
-  menuPanel.classList.add('flex');
   menuOpenBtn?.setAttribute('aria-expanded', 'true');
+  menuScrollLocked = true;
+  document.body.style.overflow = 'hidden';
   menuCloseBtn?.focus();
 };
 
@@ -171,8 +166,11 @@ const closeMenu = (refocus) => {
   if (!menuPanel || menuPanel.hidden) return;
   menuPanel.hidden = true;
   menuPanel.classList.add('hidden');
-  menuPanel.classList.remove('flex');
   menuOpenBtn?.setAttribute('aria-expanded', 'false');
+  if (menuScrollLocked) {
+    menuScrollLocked = false;
+    document.body.style.overflow = '';
+  }
   if (refocus) menuOpenBtn?.focus();
 };
 
@@ -184,97 +182,273 @@ menuPanel?.querySelectorAll('a').forEach((a) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && menuPanel && !menuPanel.hidden) closeMenu(true);
 });
-window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+desktopMQ.addEventListener('change', (e) => {
   if (e.matches) closeMenu(false);
 });
 
-/* ============================================================
-   Gallery filters
-   ============================================================ */
-const chips = [...document.querySelectorAll('.filter-chip')];
-const galleryItems = [...document.querySelectorAll('.gallery-item')];
-const emptyNote = document.getElementById('gallery-empty');
-
-const paintChips = (active) => {
-  chips.forEach((chip) => {
-    const isActive = chip === active;
-    chip.setAttribute('aria-pressed', String(isActive));
-    chip.classList.toggle('bg-ink', isActive);
-    chip.classList.toggle('text-white', isActive);
-    chip.classList.toggle('border-ink', isActive);
-    chip.classList.toggle('border-hairline', !isActive);
-    chip.classList.toggle('text-ink', !isActive);
-    chip.classList.toggle('hover:border-bronze', !isActive);
-  });
-};
-paintChips(chips[0]);
-
-chips.forEach((chip) => {
-  chip.addEventListener('click', () => {
-    paintChips(chip);
-    const key = chip.dataset.filter;
-    let visible = 0;
-    const shown = [];
-    galleryItems.forEach((item) => {
-      const show = key === 'all' || item.dataset.category === key;
-      item.classList.toggle('is-hidden', !show);
-      if (show) {
-        visible += 1;
-        shown.push(item);
-      }
+// Mobile accordions: one group open at a time.
+document.querySelectorAll('.m-acc').forEach((acc) => {
+  const toggle = acc.querySelector('.m-acc-toggle');
+  toggle?.addEventListener('click', () => {
+    const willOpen = acc.dataset.open !== 'true';
+    document.querySelectorAll('.m-acc').forEach((other) => {
+      other.dataset.open = 'false';
+      other.querySelector('.m-acc-toggle')?.setAttribute('aria-expanded', 'false');
     });
-    if (emptyNote) emptyNote.classList.toggle('hidden', visible > 0);
-    // Reset any stale inline reveal state, then fade reshown tiles in.
-    // Without this, tiles reshown by a filter switch can stay blank
-    // (stale opacity/transform + no re-trigger for in-view items).
-    gsap.killTweensOf(galleryItems);
-    gsap.set(galleryItems, { clearProps: 'opacity,transform' });
-    if (!prefersReducedMotion && shown.length) {
-      gsap.fromTo(
-        shown,
-        { opacity: 0, y: 14 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          stagger: 0.04,
-          ease: 'power2.out',
-          overwrite: true,
-          clearProps: 'opacity,transform',
-        }
-      );
-    }
-    ScrollTrigger.refresh();
+    acc.dataset.open = String(willOpen);
+    toggle.setAttribute('aria-expanded', String(willOpen));
   });
 });
 
 /* ============================================================
-   Lightbox (keyboard-operable, focus managed)
+   Hero slider: crossfade, autoplay 5s, keyboard + swipe
+   ============================================================ */
+const heroSection = document.querySelector('[data-hero-slider]');
+if (heroSection) {
+  const slides = [...heroSection.querySelectorAll('[data-hero-slide]')];
+  const counter = document.getElementById('hero-counter');
+  const status = document.getElementById('hero-status');
+  const total = slides.length;
+  let current = 0;
+  let timer = null;
+
+  const ensureLoaded = (index) => {
+    const img = slides[index]?.querySelector('img');
+    if (img && img.dataset.src && !img.src.includes(img.dataset.src)) {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    }
+  };
+
+  const goTo = (index, userInitiated) => {
+    current = (index + total) % total;
+    ensureLoaded(current);
+    slides.forEach((s, i) => {
+      s.classList.toggle('is-active', i === current);
+      s.setAttribute('aria-hidden', String(i !== current));
+    });
+    if (counter) counter.textContent = `${current + 1} / ${total}`;
+    if (status) status.textContent = `Slide ${current + 1} of ${total}`;
+    if (userInitiated) restartAutoplay();
+  };
+
+  const startAutoplay = () => {
+    if (prefersReducedMotion || timer) return;
+    timer = window.setInterval(() => goTo(current + 1, false), 5000);
+  };
+  const stopAutoplay = () => {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  };
+  const restartAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+  document.getElementById('hero-prev')?.addEventListener('click', () => goTo(current - 1, true));
+  document.getElementById('hero-next')?.addEventListener('click', () => goTo(current + 1, true));
+
+  heroSection.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goTo(current - 1, true);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goTo(current + 1, true);
+    }
+  });
+
+  // Swipe support
+  let touchX = null;
+  heroSection.addEventListener('touchstart', (e) => {
+    touchX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  heroSection.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1), true);
+    touchX = null;
+  }, { passive: true });
+
+  heroSection.addEventListener('pointerenter', stopAutoplay);
+  heroSection.addEventListener('pointerleave', startAutoplay);
+  heroSection.addEventListener('focusin', stopAutoplay);
+  heroSection.addEventListener('focusout', startAutoplay);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  // Load the deferred slides after first paint so they are ready.
+  const loadDeferred = () => {
+    slides.forEach((_, i) => ensureLoaded(i));
+  };
+  if (document.readyState === 'complete') loadDeferred();
+  else window.addEventListener('load', loadDeferred);
+
+  startAutoplay();
+}
+
+/* ============================================================
+   Gallery slider: stepped, infinite loop, progress line,
+   autoplay 9s pausing on hover/interaction
+   ============================================================ */
+const gallerySlider = document.querySelector('[data-gallery-slider]');
+if (gallerySlider) {
+  const track = document.getElementById('gallery-track');
+  const progress = document.getElementById('gallery-progress');
+  const originals = [...track.children];
+  const total = originals.length;
+  const CLONES = 5;
+
+  // Clone the first slides for a seamless loop.
+  for (let i = 0; i < CLONES; i += 1) {
+    const clone = originals[i].cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.classList.add('is-clone');
+    const btn = clone.querySelector('button');
+    if (btn) btn.tabIndex = -1;
+    track.appendChild(clone);
+  }
+
+  let index = 0;
+  let timer = null;
+  let animating = false;
+
+  const stepWidth = () => {
+    const first = track.children[0];
+    const gap = parseFloat(getComputedStyle(track).columnGap || '16') || 16;
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const paint = () => {
+    track.style.transform = `translateX(${-index * stepWidth()}px)`;
+    if (progress) {
+      const p = ((index % total) + 1) / total;
+      progress.style.transform = `scaleX(${p})`;
+    }
+  };
+
+  const jumpWithoutAnim = (to) => {
+    track.classList.add('no-anim');
+    index = to;
+    paint();
+    // Force reflow so the next animated step starts from the new spot.
+    void track.offsetWidth;
+    track.classList.remove('no-anim');
+  };
+
+  const goTo = (to, userInitiated) => {
+    if (animating) return;
+    if (to > total) return;
+    if (to === total) {
+      // Stepped onto the clones: animate, then jump back silently.
+      animating = true;
+      index = total;
+      paint();
+      window.setTimeout(() => {
+        jumpWithoutAnim(0);
+        animating = false;
+      }, 520);
+    } else if (to < 0) {
+      // Wrap backwards: jump to the clone zone, then step back animated.
+      animating = true;
+      jumpWithoutAnim(total);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          index = total - 1;
+          paint();
+          window.setTimeout(() => {
+            animating = false;
+          }, 520);
+        });
+      });
+    } else {
+      index = to;
+      paint();
+    }
+    if (userInitiated) restartAutoplay();
+  };
+
+  const startAutoplay = () => {
+    if (prefersReducedMotion || timer) return;
+    timer = window.setInterval(() => goTo(index + 1, false), 9000);
+  };
+  const stopAutoplay = () => {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  };
+  const restartAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+  gallerySlider.querySelectorAll('[data-g-prev]').forEach((b) => b.addEventListener('click', () => goTo(index - 1, true)));
+  gallerySlider.querySelectorAll('[data-g-next]').forEach((b) => b.addEventListener('click', () => goTo(index + 1, true)));
+  // The heading arrow button lives outside the slider wrapper.
+  document.querySelectorAll('#portfolio [data-g-next]').forEach((b) => {
+    if (!gallerySlider.contains(b)) b.addEventListener('click', () => goTo(index + 1, true));
+  });
+
+  gallerySlider.addEventListener('pointerenter', stopAutoplay);
+  gallerySlider.addEventListener('pointerleave', startAutoplay);
+  gallerySlider.addEventListener('focusin', stopAutoplay);
+  gallerySlider.addEventListener('focusout', startAutoplay);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  window.addEventListener('resize', () => {
+    jumpWithoutAnim(index % total);
+  });
+
+  paint();
+  startAutoplay();
+}
+
+/* ============================================================
+   Lightbox: grouped (gallery / events), keyboard-operable,
+   focus managed, trap-ish Tab handling
    ============================================================ */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
-const triggers = [...document.querySelectorAll('[data-lightbox-trigger]')];
-let currentIndex = 0;
+let lbList = [];
+let lbIndex = 0;
 let lastFocused = null;
 
-const visibleTriggers = () =>
-  triggers.filter((t) => !t.closest('.gallery-item')?.classList.contains('is-hidden'));
+const groupTriggers = (group) => {
+  const seen = new Set();
+  const list = [];
+  document.querySelectorAll(`[data-lightbox-trigger][data-lb-group="${group}"]`).forEach((t) => {
+    if (t.closest('.is-clone')) return;
+    const key = t.dataset.lbIndex;
+    if (seen.has(key)) return;
+    seen.add(key);
+    list.push(t);
+  });
+  return list;
+};
 
-const showPhoto = (index) => {
-  const list = visibleTriggers();
-  if (!list.length) return;
-  currentIndex = (index + list.length) % list.length;
-  const t = list[currentIndex];
+const showPhoto = (i) => {
+  if (!lbList.length) return;
+  lbIndex = (i + lbList.length) % lbList.length;
+  const t = lbList[lbIndex];
   lightboxImg.src = t.dataset.full || '';
   lightboxImg.alt = t.dataset.alt || '';
   lightboxCaption.textContent = t.dataset.caption || '';
 };
 
 const openLightbox = (trigger) => {
-  const list = visibleTriggers();
+  lbList = groupTriggers(trigger.dataset.lbGroup || 'gallery');
+  const pos = lbList.findIndex((t) => t.dataset.lbIndex === trigger.dataset.lbIndex);
   lastFocused = document.activeElement;
-  showPhoto(list.indexOf(trigger));
+  showPhoto(pos >= 0 ? pos : 0);
   lightbox.hidden = false;
   lightbox.classList.remove('hidden');
   lightbox.classList.add('flex');
@@ -296,31 +470,21 @@ const closeLightbox = () => {
 };
 
 if (lightbox) {
-  document.getElementById('gallery-grid')?.addEventListener('click', (e) => {
+  document.addEventListener('click', (e) => {
     const t = e.target.closest('[data-lightbox-trigger]');
     if (t) openLightbox(t);
   });
-  galleryItems.forEach((item) => {
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const t = item.querySelector('[data-lightbox-trigger]');
-        if (t) openLightbox(t);
-      }
-    });
-  });
   document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
-  document.getElementById('lightbox-prev')?.addEventListener('click', () => showPhoto(currentIndex - 1));
-  document.getElementById('lightbox-next')?.addEventListener('click', () => showPhoto(currentIndex + 1));
+  document.getElementById('lightbox-prev')?.addEventListener('click', () => showPhoto(lbIndex - 1));
+  document.getElementById('lightbox-next')?.addEventListener('click', () => showPhoto(lbIndex + 1));
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (e) => {
     if (lightbox.hidden) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') showPhoto(currentIndex - 1);
-    if (e.key === 'ArrowRight') showPhoto(currentIndex + 1);
-    // Minimal focus trap: keep Tab inside the dialog
+    if (e.key === 'ArrowLeft') showPhoto(lbIndex - 1);
+    if (e.key === 'ArrowRight') showPhoto(lbIndex + 1);
     if (e.key === 'Tab') {
       const focusables = [...lightbox.querySelectorAll('button')];
       if (!focusables.length) return;
@@ -338,39 +502,32 @@ if (lightbox) {
 }
 
 /* ============================================================
-   FAQ accordion
+   About: Read More expands inline
    ============================================================ */
-document.querySelectorAll('.faq-item').forEach((item) => {
-  const toggle = item.querySelector('.faq-toggle');
-  toggle?.addEventListener('click', () => {
-    const isOpen = item.dataset.open === 'true';
-    document.querySelectorAll('.faq-item').forEach((other) => {
-      other.dataset.open = 'false';
-      other.querySelector('.faq-toggle')?.setAttribute('aria-expanded', 'false');
-    });
-    item.dataset.open = String(!isOpen);
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-  });
+const aboutBtn = document.getElementById('about-more-btn');
+const aboutMore = document.getElementById('about-more');
+aboutBtn?.addEventListener('click', () => {
+  const isOpen = aboutBtn.getAttribute('aria-expanded') === 'true';
+  aboutBtn.setAttribute('aria-expanded', String(!isOpen));
+  if (aboutMore) aboutMore.hidden = isOpen;
+  aboutBtn.textContent = isOpen ? 'Read More About Us' : 'Show Less';
 });
 
 /* ============================================================
-   Booking form → mailto fallback (no backend)
+   Contact form → mailto fallback (no backend)
    ============================================================ */
 const form = document.getElementById('booking-form');
 form?.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = new FormData(form);
   const name = String(data.get('name') || '').trim();
-  const contact = String(data.get('contact') || '').trim();
-  const date = String(data.get('date') || '').trim();
-  const city = String(data.get('city') || '').trim();
-  const pkg = String(data.get('package') || '').trim();
+  const email = String(data.get('email') || '').trim();
   const message = String(data.get('message') || '').trim();
   const error = document.getElementById('form-error');
 
-  if (!name || !contact) {
+  if (!name || !email || !email.includes('@')) {
     if (error) {
-      error.textContent = 'Please add your names and a phone number or email so we can reply.';
+      error.textContent = 'Please add your name and a valid email address so we can reply.';
       error.classList.remove('hidden');
     }
     return;
@@ -378,15 +535,7 @@ form?.addEventListener('submit', (e) => {
   error?.classList.add('hidden');
 
   const subject = `Wedding booking enquiry — ${name}`;
-  const body = [
-    `Names: ${name}`,
-    `Contact: ${contact}`,
-    `Event date: ${date || 'Not decided yet'}`,
-    `City: ${city}`,
-    `Package: ${pkg}`,
-    '',
-    message || '(No extra details shared.)',
-  ].join('\n');
+  const body = [`Name: ${name}`, `Email: ${email}`, '', message || '(No extra details shared.)'].join('\n');
 
   window.location.href = `mailto:hello@vowsbyaariz.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
