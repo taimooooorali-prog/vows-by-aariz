@@ -144,12 +144,49 @@ const header = document.getElementById('site-header');
 const setHeader = () => {
   if (!header) return;
   const scrolled = window.scrollY > 40;
-  header.classList.toggle('bg-ivory/90', scrolled);
+  header.classList.toggle('bg-white/90', scrolled);
   header.classList.toggle('backdrop-blur-md', scrolled);
   header.classList.toggle('shadow-card', scrolled);
 };
 setHeader();
 window.addEventListener('scroll', setHeader, { passive: true });
+
+/* ============================================================
+   Mobile menu (fixed overlay — no document reflow)
+   ============================================================ */
+const menuOpenBtn = document.getElementById('mobile-menu-open');
+const menuPanel = document.getElementById('mobile-menu');
+const menuCloseBtn = document.getElementById('mobile-menu-close');
+
+const openMenu = () => {
+  if (!menuPanel) return;
+  menuPanel.hidden = false;
+  menuPanel.classList.remove('hidden');
+  menuPanel.classList.add('flex');
+  menuOpenBtn?.setAttribute('aria-expanded', 'true');
+  menuCloseBtn?.focus();
+};
+
+const closeMenu = (refocus) => {
+  if (!menuPanel || menuPanel.hidden) return;
+  menuPanel.hidden = true;
+  menuPanel.classList.add('hidden');
+  menuPanel.classList.remove('flex');
+  menuOpenBtn?.setAttribute('aria-expanded', 'false');
+  if (refocus) menuOpenBtn?.focus();
+};
+
+menuOpenBtn?.addEventListener('click', openMenu);
+menuCloseBtn?.addEventListener('click', () => closeMenu(true));
+menuPanel?.querySelectorAll('a').forEach((a) => {
+  a.addEventListener('click', () => closeMenu(false));
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuPanel && !menuPanel.hidden) closeMenu(true);
+});
+window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+  if (e.matches) closeMenu(false);
+});
 
 /* ============================================================
    Gallery filters
@@ -162,12 +199,12 @@ const paintChips = (active) => {
   chips.forEach((chip) => {
     const isActive = chip === active;
     chip.setAttribute('aria-pressed', String(isActive));
-    chip.classList.toggle('bg-espresso', isActive);
-    chip.classList.toggle('text-ivory', isActive);
-    chip.classList.toggle('border-espresso', isActive);
-    chip.classList.toggle('border-sand', !isActive);
-    chip.classList.toggle('text-espresso', !isActive);
-    chip.classList.toggle('hover:border-gold', !isActive);
+    chip.classList.toggle('bg-ink', isActive);
+    chip.classList.toggle('text-white', isActive);
+    chip.classList.toggle('border-ink', isActive);
+    chip.classList.toggle('border-hairline', !isActive);
+    chip.classList.toggle('text-ink', !isActive);
+    chip.classList.toggle('hover:border-bronze', !isActive);
   });
 };
 paintChips(chips[0]);
