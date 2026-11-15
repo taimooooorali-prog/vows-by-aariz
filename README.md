@@ -52,11 +52,11 @@ src/
   pages/index.astro          All sections, content arrays
   components/                Gallery (+lightbox), Faq, Testimonials, ContactForm
   scripts/site.js            GSAP motion, filters, lightbox, FAQ, form
-  styles/global.css          Tokens, marquee, grain, accordion, reduced-motion
+  styles/global.css          Tokens, @font-face, marquee, accordion, reduced-motion
 ```
 
 ## Credits
 
-Demo photography by the artists named in the site footer, via
-[Pexels](https://www.pexels.com/) (free license). Fonts: Fraunces + Manrope
-(Google Fonts, OFL). Icons: Lucide.
+Demo photography via
+[Pexels](https://www.pexels.com/) (free license). Fonts: EB Garamond + Inter
+(self-hosted variable woff2, OFL). Icons: Lucide.
