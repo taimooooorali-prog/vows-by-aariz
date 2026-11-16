@@ -58,7 +58,7 @@ if (!prefersReducedMotion) {
 
 /* ============================================================
    Header state: transparent + white text over the hero; solid
-   cream + dark text after ~95% of viewport height scrolled.
+   white + dark text after ~95% of viewport height scrolled.
    ============================================================ */
 const header = document.getElementById('site-header');
 const setHeader = () => {
@@ -201,97 +201,6 @@ document.querySelectorAll('.m-acc').forEach((acc) => {
 });
 
 /* ============================================================
-   Hero slider: crossfade, autoplay 5s, keyboard + swipe
-   ============================================================ */
-const heroSection = document.querySelector('[data-hero-slider]');
-if (heroSection) {
-  const slides = [...heroSection.querySelectorAll('[data-hero-slide]')];
-  const counter = document.getElementById('hero-counter');
-  const status = document.getElementById('hero-status');
-  const total = slides.length;
-  let current = 0;
-  let timer = null;
-
-  const ensureLoaded = (index) => {
-    const img = slides[index]?.querySelector('img');
-    if (img && img.dataset.src && !img.src.includes(img.dataset.src)) {
-      img.src = img.dataset.src;
-      img.removeAttribute('data-src');
-    }
-  };
-
-  const goTo = (index, userInitiated) => {
-    current = (index + total) % total;
-    ensureLoaded(current);
-    slides.forEach((s, i) => {
-      s.classList.toggle('is-active', i === current);
-      s.setAttribute('aria-hidden', String(i !== current));
-    });
-    if (counter) counter.textContent = `${current + 1} / ${total}`;
-    if (status) status.textContent = `Slide ${current + 1} of ${total}`;
-    if (userInitiated) restartAutoplay();
-  };
-
-  const startAutoplay = () => {
-    if (prefersReducedMotion || timer) return;
-    timer = window.setInterval(() => goTo(current + 1, false), 5000);
-  };
-  const stopAutoplay = () => {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
-    }
-  };
-  const restartAutoplay = () => {
-    stopAutoplay();
-    startAutoplay();
-  };
-
-  document.getElementById('hero-prev')?.addEventListener('click', () => goTo(current - 1, true));
-  document.getElementById('hero-next')?.addEventListener('click', () => goTo(current + 1, true));
-
-  heroSection.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      goTo(current - 1, true);
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      goTo(current + 1, true);
-    }
-  });
-
-  // Swipe support
-  let touchX = null;
-  heroSection.addEventListener('touchstart', (e) => {
-    touchX = e.changedTouches[0].clientX;
-  }, { passive: true });
-  heroSection.addEventListener('touchend', (e) => {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1), true);
-    touchX = null;
-  }, { passive: true });
-
-  heroSection.addEventListener('pointerenter', stopAutoplay);
-  heroSection.addEventListener('pointerleave', startAutoplay);
-  heroSection.addEventListener('focusin', stopAutoplay);
-  heroSection.addEventListener('focusout', startAutoplay);
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopAutoplay();
-    else startAutoplay();
-  });
-
-  // Load the deferred slides after first paint so they are ready.
-  const loadDeferred = () => {
-    slides.forEach((_, i) => ensureLoaded(i));
-  };
-  if (document.readyState === 'complete') loadDeferred();
-  else window.addEventListener('load', loadDeferred);
-
-  startAutoplay();
-}
-
-/* ============================================================
    Gallery slider: stepped, infinite loop, progress line,
    autoplay 9s pausing on hover/interaction
    ============================================================ */
@@ -409,6 +318,130 @@ if (gallerySlider) {
 
   paint();
   startAutoplay();
+}
+
+/* ============================================================
+   Awards carousel: stepped, infinite loop, keyboard-operable.
+   No autoplay. Clones reuse the originals' SVG defs (their own
+   <defs> are removed so no SVG id is duplicated).
+   ============================================================ */
+const awardsCarousel = document.querySelector('[data-awards-carousel]');
+if (awardsCarousel) {
+  const track = document.getElementById('awards-track');
+  const originals = [...track.children];
+  const total = originals.length;
+  const CLONES = 4;
+
+  for (let i = 0; i < CLONES; i += 1) {
+    const clone = originals[i].cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.classList.add('is-clone');
+    clone.querySelector('defs')?.remove();
+    track.appendChild(clone);
+  }
+
+  let index = 0;
+  let animating = false;
+
+  const stepWidth = () => {
+    const first = track.children[0];
+    const gap = parseFloat(getComputedStyle(track).columnGap || '24') || 24;
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const paint = () => {
+    track.style.transform = `translateX(${-index * stepWidth()}px)`;
+  };
+
+  const jumpWithoutAnim = (to) => {
+    track.classList.add('no-anim');
+    index = to;
+    paint();
+    void track.offsetWidth;
+    track.classList.remove('no-anim');
+  };
+
+  const goTo = (to) => {
+    if (animating) return;
+    if (to > total) return;
+    if (to === total) {
+      animating = true;
+      index = total;
+      paint();
+      window.setTimeout(() => {
+        jumpWithoutAnim(0);
+        animating = false;
+      }, 520);
+    } else if (to < 0) {
+      animating = true;
+      jumpWithoutAnim(total);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          index = total - 1;
+          paint();
+          window.setTimeout(() => {
+            animating = false;
+          }, 520);
+        });
+      });
+    } else {
+      index = to;
+      paint();
+    }
+  };
+
+  awardsCarousel.querySelectorAll('[data-a-prev]').forEach((b) => b.addEventListener('click', () => goTo(index - 1)));
+  awardsCarousel.querySelectorAll('[data-a-next]').forEach((b) => b.addEventListener('click', () => goTo(index + 1)));
+
+  track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goTo(index - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goTo(index + 1);
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    jumpWithoutAnim(index % total);
+  });
+
+  paint();
+}
+
+/* ============================================================
+   Reviews carousel: cycles 3 testimonials, keyboard-operable,
+   aria-live polite on quote change. No autoplay.
+   ============================================================ */
+const reviewsCarousel = document.querySelector('[data-reviews-carousel]');
+if (reviewsCarousel) {
+  const cards = [...reviewsCarousel.querySelectorAll('[data-review]')];
+  const counter = reviewsCarousel.querySelector('[data-r-counter]');
+  const status = reviewsCarousel.querySelector('[data-r-status]');
+  const total = cards.length;
+  let current = 0;
+
+  const show = (i) => {
+    current = (i + total) % total;
+    cards.forEach((c, k) => {
+      c.hidden = k !== current;
+    });
+    if (counter) counter.textContent = `${current + 1} / ${total}`;
+    if (status) status.textContent = `Review ${current + 1} of ${total}`;
+  };
+
+  reviewsCarousel.querySelector('[data-r-prev]')?.addEventListener('click', () => show(current - 1));
+  reviewsCarousel.querySelector('[data-r-next]')?.addEventListener('click', () => show(current + 1));
+  reviewsCarousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      show(current - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      show(current + 1);
+    }
+  });
 }
 
 /* ============================================================
