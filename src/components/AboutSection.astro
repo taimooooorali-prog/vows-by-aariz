@@ -3,81 +3,75 @@ const team = [
   {
     name: 'Aariz Ahmed',
     role: 'Lead Photographer',
+    city: 'Lahore',
     src: '/images/about.webp',
-    alt: 'Newlyweds in traditional attire embracing under twinkling lights',
+    alt: 'Couple in traditional attire smiling together against a plain wall',
     w: 900,
     h: 1350,
-    offset: 'lg:mt-0',
   },
   {
     name: 'Sana Malik',
-    role: 'Second Shooter',
+    role: 'Films & Drone',
+    city: 'Karachi',
     src: '/images/gallery-12.webp',
     alt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion',
     w: 900,
     h: 1200,
-    offset: 'lg:mt-12',
   },
   {
     name: 'Daniyal Raza',
-    role: 'Films & Drone',
+    role: 'Second Shooter',
+    city: 'Islamabad',
     src: '/images/gallery-13.webp',
-    alt: 'Traditional couple in classic wedding attire sharing a joyful moment indoors',
+    alt: 'Bride and groom in traditional attire standing together in front of a floral wedding stage',
     w: 900,
     h: 1200,
-    offset: 'lg:mt-24',
   },
 ];
 ---
 
-<section id="about" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="About us">
-  <div class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-10">
-    <div class="lg:col-span-5">
-      <h2 class="reveal font-display text-[3.25rem] font-normal leading-[1.05] tracking-tight sm:text-[3.625rem]">
-        Hi, I’m Aariz —<br />
-        I don’t pose<br />
-        weddings.
-      </h2>
-      <div class="reveal mt-6 space-y-4 text-[1.125rem] leading-relaxed text-main">
-        <p>
-          Eight years ago I photographed my cousin’s mehndi with a borrowed camera and
-          missed half the dances because I was crying behind the lens. I’ve been chasing
-          that feeling ever since — across 250+ shaadis, from Lahore marquees to Hunza valleys.
-        </p>
-        <p>
-          My style sits between documentary and editorial: honest, unposed moments, composed
-          like the magazine spreads you grew up loving. Warm skin tones, real laughter, and
-          not a single awkward “stand there and smile” unless you ask for it.
-        </p>
-      </div>
+<section id="about" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="Meet the team">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <p class="reveal text-xs font-bold uppercase tracking-widest2 text-rose">Meet the team</p>
+    <h2 class="reveal mt-4 max-w-2xl font-display text-5xl font-normal leading-[1.05] tracking-tight text-ink sm:text-6xl">
+      The people behind the lens
+    </h2>
 
-      <div id="about-more" class="space-y-4 text-[1.125rem] leading-relaxed text-main" hidden>
-        <p class="pt-4">
-          Every wedding gets backup cameras, lenses and cards — always. A second shooter joins
-          for large multi-day celebrations, and every frame is edited in-house by me, never
-          outsourced, so the gallery you receive looks like one person’s careful work. Because
-          it is.
-        </p>
-        <p>
-          Sana and Daniyal have shot beside me for five years. Between us we cover the
-          bride’s room and the baraat’s entrance, the drone shot at dusk and the grandmother
-          asleep in the corner — the whole day, from every angle that matters.
-        </p>
-      </div>
-
-      <button type="button" id="about-more-btn" class="btn-pill reveal mt-8" aria-expanded="false" aria-controls="about-more">
-        Read More About Us
-      </button>
+    <div class="reveal mt-6 max-w-3xl space-y-4 text-[1.125rem] leading-relaxed text-body">
+      <p>
+        Eight years ago I photographed my cousin’s mehndi with a borrowed camera and
+        missed half the dances because I was crying behind the lens. I’ve been chasing
+        that feeling ever since — across 250+ shaadis, from Lahore marquees to Hunza valleys.
+      </p>
+      <p>
+        My style sits between documentary and editorial: honest, unposed moments, composed
+        like the magazine spreads you grew up loving. Warm skin tones, real laughter, and
+        not a single awkward “stand there and smile” unless you ask for it.
+      </p>
     </div>
 
-    <div class="lg:col-span-7">
-      <div class="grid grid-cols-3 gap-3 sm:gap-5">
-        {team.map((t) => (
-          <figure class={t.offset}>
-            <p class="mb-3">
-              <span class="block font-bold leading-tight text-ink">{t.name}</span>
-              <span class="block text-sm text-main">{t.role}</span>
-            </p>
+    <div id="about-more" class="max-w-3xl space-y-4 text-[1.125rem] leading-relaxed text-body" hidden>
+      <p class="pt-4">
+        Every wedding gets backup cameras, lenses and cards — always. A second shooter joins
+        for large multi-day celebrations, and every frame is edited in-house by me, never
+        outsourced, so the gallery you receive looks like one person’s careful work. Because
+        it is.
+      </p>
+      <p>
+        Sana and Daniyal have shot beside me for five years. Between us we cover the
+        bride’s room and the baraat’s entrance, the drone shot at dusk and the grandmother
+        asleep in the corner — the whole day, from every angle that matters.
+      </p>
+    </div>
+
+    <button type="button" id="about-more-btn" class="btn-secondary reveal mt-8" aria-expanded="false" aria-controls="about-more">
+      Read More About Us
+    </button>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-3 sm:gap-5">
+      {team.map((t) => (
+        <figure class="reveal">
+          <div class="relative overflow-hidden rounded-[24px]">
             <img
               src={t.src}
               alt={t.alt}
@@ -85,12 +79,18 @@ const team = [
               height={t.h}
               loading="lazy"
               decoding="async"
-              class="aspect-[3/4] w-full object-cover"
+              class="aspect-[3/4] w-full object-cover object-top"
             />
-          </figure>
-        ))}
-      </div>
-      <p class="reveal mt-8 font-display text-3xl italic text-ink">— Aariz Ahmed</p>
+            <span class="absolute left-4 top-4 rounded-full bg-rose px-3.5 py-1.5 text-xs font-bold text-white shadow-card">
+              {t.role}
+            </span>
+          </div>
+          <figcaption class="mt-4 px-1">
+            <span class="block font-bold leading-tight text-ink">{t.name}</span>
+            <span class="mt-0.5 block text-sm text-body">{t.city}</span>
+          </figcaption>
+        </figure>
+      ))}
     </div>
   </div>
 </section>

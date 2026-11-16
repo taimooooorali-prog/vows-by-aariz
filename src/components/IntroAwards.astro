@@ -1,0 +1,89 @@
+---
+import { ArrowLeft, ArrowRight } from 'lucide-astro';
+
+/* Original dummy award rosettes — fictional demo honours, designed here as
+   inline SVG seals. No real award body names or artwork are used. */
+const badges = [
+  { top: 'WEDDING PHOTOGRAPHER', bottom: 'OF THE YEAR · 2025', center: '★' },
+  { top: 'COUPLES’ CHOICE', bottom: 'AWARD · 2025', center: '★' },
+  { top: 'FIVE STAR RATED', bottom: '87 REVIEWS', center: '5.0' },
+  { top: 'TOP TEN', bottom: 'LAHORE · 2025', center: '10' },
+  { top: 'BEST CINEMATIC FILM', bottom: '2024', center: '★' },
+  { top: 'BEST MEHNDI COVERAGE', bottom: '2025', center: '★' },
+  { top: 'DESTINATION WEDDING', bottom: 'PRO · 2025', center: '✦' },
+  { top: 'EDITORS’ PICK', bottom: '2025', center: '★' },
+];
+---
+
+<section class="py-[90px]" aria-label="About Vows by Aariz and demo honours">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <p class="reveal text-center font-display text-lg font-normal italic tracking-[0.14em] text-rose">VOWS BY AARIZ</p>
+    <h2 class="reveal mx-auto mt-4 max-w-3xl text-center font-display text-5xl font-normal leading-[1.05] tracking-tight text-ink sm:text-6xl">
+      Joyful, honest,<br />
+      unforgettable.
+    </h2>
+    <p class="reveal mx-auto mt-5 max-w-xl text-center text-[1.125rem] leading-relaxed text-body">
+      From the first dhol beat to the last goodbye, we photograph shaadis the way
+      they felt — warm, colourful, and completely yours.
+    </p>
+
+    <!-- Awards carousel: 4 seals visible on desktop, stepping 1 per click, loops -->
+    <div class="relative mt-14" data-awards-carousel>
+      <div class="overflow-hidden" data-awards-viewport>
+        <div id="awards-track" class="a-track flex gap-6" role="region" aria-label="Demo honours carousel" tabindex="0">
+          {badges.map((b, i) => (
+            <div class="a-slide shrink-0">
+              <svg
+                viewBox="0 0 170 170"
+                class="mx-auto h-auto w-full max-w-[150px] text-ink lg:max-w-[170px]"
+                role="img"
+                aria-label={`${b.top} — ${b.bottom}`}
+              >
+                <defs>
+                  <path id={`award-top-${i}`} d="M 85,85 m -68,0 a 68,68 0 1,1 136,0 a 68,68 0 1,1 -136,0" fill="none" />
+                  <path id={`award-bottom-${i}`} d="M 85,85 m -56,0 a 56,56 0 1,0 112,0 a 56,56 0 1,0 -112,0" fill="none" />
+                </defs>
+                <circle cx="85" cy="85" r="82" fill="none" stroke="currentColor" stroke-width="1.2" />
+                <circle cx="85" cy="85" r="76" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.55" />
+                <circle cx="85" cy="85" r="46" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.55" />
+                <text font-size="10.5" letter-spacing="2.2" fill="currentColor" font-family="Inter, system-ui, sans-serif" font-weight="600">
+                  <textPath href={`#award-top-${i}`} startOffset="25%" text-anchor="middle">{b.top}</textPath>
+                </text>
+                <text font-size="9.5" letter-spacing="2" fill="currentColor" font-family="Inter, system-ui, sans-serif" font-weight="600">
+                  <textPath href={`#award-bottom-${i}`} startOffset="25%" text-anchor="middle">{b.bottom}</textPath>
+                </text>
+                <text x="85" y="95" text-anchor="middle" font-size="26" fill="#A93A5B" font-family="Georgia, serif">{b.center}</text>
+                <text x="30" y="90" text-anchor="middle" font-size="10" fill="#A93A5B" aria-hidden="true">✦</text>
+                <text x="140" y="90" text-anchor="middle" font-size="10" fill="#A93A5B" aria-hidden="true">✦</text>
+              </svg>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Edge chevrons (desktop) -->
+      <button type="button" class="btn-circle absolute -left-2 top-1/2 z-10 hidden -translate-y-1/2 shadow-card lg:inline-flex" data-a-prev aria-label="Previous honours">
+        <ArrowLeft size={18} aria-hidden="true" />
+      </button>
+      <button type="button" class="btn-circle absolute -right-2 top-1/2 z-10 hidden -translate-y-1/2 shadow-card lg:inline-flex" data-a-next aria-label="Next honours">
+        <ArrowRight size={18} aria-hidden="true" />
+      </button>
+      <!-- Centred chevrons (mobile / tablet) -->
+      <div class="mt-8 flex items-center justify-center gap-3 lg:hidden">
+        <button type="button" class="btn-circle" data-a-prev aria-label="Previous honours">
+          <ArrowLeft size={18} aria-hidden="true" />
+        </button>
+        <button type="button" class="btn-circle" data-a-next aria-label="Next honours">
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+
+    <p class="reveal mt-12 text-center">
+      <a href="#services" class="group inline-flex items-center gap-2 font-semibold text-ink transition-colors hover:text-rose">
+        <span class="nav-link">Every wedding, every detail — see how we work</span>
+        <ArrowRight size={17} class="transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" />
+      </a>
+    </p>
+  </div>
+</section>

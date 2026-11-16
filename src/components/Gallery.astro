@@ -3,15 +3,15 @@ import { ArrowLeft, ArrowRight } from 'lucide-astro';
 import { GALLERY } from '../data/site';
 ---
 
-<section id="portfolio" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="The Portfolio">
+<section id="portfolio" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="The Portfolio">
   <div class="mx-auto max-w-7xl px-5 sm:px-8">
     <div class="reveal flex items-center justify-center gap-4 sm:gap-5">
-      <h2 class="text-center font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl">The Portfolio</h2>
+      <h2 class="text-center font-display text-5xl font-normal leading-[1.05] tracking-tight text-ink sm:text-6xl">The Portfolio</h2>
       <button type="button" class="btn-circle btn-circle-sm" data-g-next aria-label="Next photos">
         <ArrowRight size={17} aria-hidden="true" />
       </button>
     </div>
-    <p class="reveal mx-auto mt-4 max-w-xl text-center text-[1.125rem] leading-relaxed text-main">
+    <p class="reveal mx-auto mt-4 max-w-xl text-center text-[1.125rem] leading-relaxed text-body">
       Fifteen frames from recent shaadis. Tap any photo to see it full-screen.
     </p>
   </div>
@@ -38,7 +38,7 @@ import { GALLERY } from '../data/site';
               height={p.h}
               loading="eager"
               decoding="async"
-              class="h-full w-full object-cover"
+              class="h-full w-full rounded-[20px] object-cover"
             />
           </button>
         </figure>
@@ -47,7 +47,7 @@ import { GALLERY } from '../data/site';
 
     <div class="mx-auto mt-8 flex max-w-7xl items-center gap-5 px-5 sm:px-8">
       <div class="h-px flex-1 bg-hairline" aria-hidden="true">
-        <div id="gallery-progress" class="g-progress-fill h-px bg-main" style="transform: scaleX(0.0667)"></div>
+        <div id="gallery-progress" class="g-progress-fill h-px bg-rose" style="transform: scaleX(0.0667)"></div>
       </div>
       <div class="flex items-center gap-3">
         <button type="button" class="btn-circle" data-g-prev aria-label="Previous photos">

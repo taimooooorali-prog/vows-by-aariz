@@ -1,0 +1,78 @@
+---
+import { ArrowRight } from 'lucide-astro';
+---
+
+<!-- ============ HERO: single static colour photo, text in true negative space ============ -->
+<section id="top" class="relative h-[92svh] min-h-[600px] overflow-hidden bg-dark lg:h-[100svh]" aria-label="Featured wedding photography">
+  <picture>
+    <!-- Portrait crop for phones + portrait tablets (faces upper-right,
+         empty lower-left); landscape crop otherwise. -->
+    <source media="(orientation: portrait) and (max-width: 1024px), (max-width: 640px)" srcset="/images/hero-main-mobile.webp" />
+    <img
+      src="/images/hero-main.webp"
+      alt="Bride in red and groom in a white turban standing on a mountain path"
+      width="1920"
+      height="1080"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      class="h-full w-full object-cover"
+    />
+  </picture>
+
+  <!-- Legibility: 30% black over the whole photo + soft left gradient for the text zone -->
+  <div class="pointer-events-none absolute inset-0 bg-black/30" aria-hidden="true"></div>
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0) 68%);"
+    aria-hidden="true"
+  ></div>
+  <!-- Extra bottom weight on small screens, where the text sits lower -->
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent lg:hidden" aria-hidden="true"></div>
+
+  <!-- Content: left-aligned, upper-middle on desktop, lower zone on mobile (below the faces) -->
+  <div class="absolute inset-0 flex flex-col justify-end pb-14 lg:justify-center lg:pb-0">
+    <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+      <div class="max-w-[420px] sm:max-w-[480px] lg:mb-[8vh] lg:max-w-[600px] xl:max-w-[640px]">
+        <p class="text-[11px] font-bold uppercase leading-relaxed tracking-[0.22em] text-white/80 sm:text-xs lg:tracking-[0.28em]">
+          <span class="sm:hidden">Wedding Photography</span><span class="hidden sm:inline">Wedding Photography · Lahore</span>
+        </p>
+        <h1 class="mt-3 font-display text-[2.1rem] font-normal leading-[1.04] tracking-tight text-white sm:text-5xl lg:mt-4 lg:text-[3.5rem] xl:text-[4.5rem]">
+          Every glance.<br />
+          Every tear.<br />
+          Kept forever.
+        </h1>
+        <p class="mt-4 font-display text-lg font-normal text-white sm:text-2xl lg:mt-5">Packages from PKR 85,000</p>
+        <a href="#packages" class="btn-primary mt-6 lg:mt-7">
+          Check Packages &amp; Availability
+          <ArrowRight size={18} class="btn-arrow" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROMO PILL: straddles the hero's bottom edge ============ -->
+<div class="relative z-20 mx-auto -mt-10 max-w-[900px] px-5 lg:-mt-14">
+  <div class="flex flex-col items-center gap-4 rounded-[1.75rem] bg-white px-5 py-5 shadow-pill sm:flex-row sm:gap-5 sm:rounded-full sm:px-6 sm:py-3.5">
+    <div class="flex w-full items-center gap-4 sm:w-auto sm:min-w-0 sm:flex-1">
+      <img
+        src="/images/gallery-02.webp"
+        alt=""
+        width="56"
+        height="56"
+        loading="eager"
+        decoding="async"
+        class="h-14 w-14 shrink-0 rounded-full object-cover"
+      />
+      <p class="min-w-0">
+        <span class="block truncate font-display text-[1.35rem] font-bold leading-tight text-ink">Now Booking 2027</span>
+        <span class="block truncate text-sm leading-snug text-body">Signature weddings across Lahore, Karachi &amp; Islamabad — limited dates.</span>
+      </p>
+    </div>
+    <a href="#packages" class="btn-primary w-full shrink-0 sm:w-auto">
+      See Packages
+      <ArrowRight size={17} class="btn-arrow" aria-hidden="true" />
+    </a>
+  </div>
+</div>

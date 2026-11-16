@@ -18,7 +18,7 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
 ---
 
 <header id="site-header" class="fixed inset-x-0 top-0 z-50">
-  <div class="flex h-[72px] items-center justify-between gap-4 px-5 sm:px-8 lg:h-[95px]">
+  <div class="flex h-16 items-center justify-between gap-4 px-5 sm:px-8 lg:h-[76px]">
     <a href="#top" class="flex shrink-0 items-center gap-2.5" aria-label="Vows by Aariz — home">
       <span class="flex h-10 w-10 items-center justify-center rounded-full border border-current" aria-hidden="true"><Aperture size={20} /></span>
       <span class="font-display text-xl font-normal leading-none tracking-tight sm:text-2xl">Vows <span class="italic">by Aariz</span></span>
@@ -74,11 +74,11 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
     <span class="hidden w-10 shrink-0 lg:block" aria-hidden="true"></span>
   </div>
 
-  <!-- Mega-menu panels: near-black, full-width, drop under the header -->
+  <!-- Mega-menu panels: white, full-width, drop under the header -->
   {MEGA_MENUS.map((menu) => (
     <div
       id={menu.panelId}
-      class="mega-panel absolute inset-x-0 top-full hidden bg-dark text-white lg:block"
+      class="mega-panel absolute inset-x-0 top-full hidden border-b border-hairline bg-white text-ink shadow-card lg:block"
       data-mega-panel={menu.key}
       role="region"
       aria-label={`${menu.label} menu`}
@@ -91,13 +91,13 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
           height="310"
           loading="eager"
           decoding="async"
-          class="hidden h-[310px] w-[250px] shrink-0 object-cover sm:block"
+          class="hidden h-[310px] w-[250px] shrink-0 rounded-[20px] object-cover sm:block"
         />
         <div class="min-w-0 flex-1">
-          <p class="font-display text-5xl font-normal leading-none">{menu.heading}</p>
+          <p class="font-display text-5xl font-normal leading-none text-ink">{menu.heading}</p>
           <div class="mt-7 grid grid-cols-5 gap-x-6 gap-y-4">
             {menu.links.map((link) => (
-              <a href={link.href} class="nav-link justify-self-start text-[15px] leading-snug text-white/90 hover:text-white">
+              <a href={link.href} class="nav-link justify-self-start text-[15px] leading-snug text-body transition-colors hover:text-rose">
                 {link.label}
               </a>
             ))}
@@ -108,8 +108,8 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
   ))}
 </header>
 
-<!-- Mobile menu: full-screen cream overlay -->
-<div id="mobile-menu" class="fixed inset-0 z-[70] hidden bg-cream text-ink" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+<!-- Mobile menu: full-screen white overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[70] hidden bg-white text-ink" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <div class="flex h-full w-full flex-col overflow-y-auto px-5 py-4 sm:px-8">
     <div class="flex items-center justify-between">
       <span class="flex items-center gap-2.5">
@@ -159,7 +159,7 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
       <a href="#contact" class="border-b border-hairline py-4 font-display text-3xl font-normal">Contact</a>
     </nav>
 
-    <a href="#contact" class="btn-pill mt-8 w-full">Get in Touch</a>
-    <p class="mt-6 pb-4 text-center text-sm text-main">Lahore · Karachi · Islamabad</p>
+    <a href="#contact" class="btn-primary mt-8 w-full">Get in Touch</a>
+    <p class="mt-6 pb-4 text-center text-sm text-body">Lahore · Karachi · Islamabad</p>
   </div>
 </div>

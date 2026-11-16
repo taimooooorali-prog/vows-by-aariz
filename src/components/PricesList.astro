@@ -3,43 +3,43 @@ import { ArrowRight } from 'lucide-astro';
 import { SERVICES } from '../data/site';
 ---
 
-<section id="packages" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="Packages">
+<section id="packages" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="Packages">
   <div class="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-12">
     <div class="lg:col-span-3">
-      <div class="lg:sticky lg:top-[120px]">
-        <h2 class="reveal font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl">Packages</h2>
-        <p class="reveal mt-4 max-w-xs text-[1.125rem] leading-relaxed text-main">
+      <div class="lg:sticky lg:top-[100px]">
+        <h2 class="reveal font-display text-5xl font-normal leading-[1.05] tracking-tight text-ink sm:text-6xl">Packages</h2>
+        <p class="reveal mt-4 max-w-xs text-[1.125rem] leading-relaxed text-body">
           Honest starting prices, no hidden extras. Every booking includes a written
           agreement, backup equipment, and a sneak peek within 48 hours.
         </p>
-        <a href="#packages-list" class="btn-pill reveal mt-7">See all packages</a>
+        <a href="#packages-list" class="btn-secondary reveal mt-7">See all packages</a>
       </div>
     </div>
 
-    <div id="packages-list" class="scroll-mt-24 lg:col-span-9 lg:scroll-mt-[111px]">
+    <div id="packages-list" class="scroll-mt-24 lg:col-span-9 lg:scroll-mt-[92px]">
       <ul class="flex flex-col gap-4">
         {SERVICES.map((s) => (
           <li>
             <a
               href="#contact"
               id={s.svcId}
-              class="price-row flex scroll-mt-24 flex-col gap-2 rounded-[2rem] border-[1.2px] border-main px-6 py-5 text-ink sm:scroll-mt-[111px] sm:flex-row sm:items-center sm:gap-6 sm:rounded-full sm:px-8 sm:py-6"
+              class="price-row flex scroll-mt-24 flex-col gap-2 rounded-[2rem] border-[1.2px] border-line px-6 py-5 text-ink sm:scroll-mt-[92px] sm:flex-row sm:items-center sm:gap-6 sm:rounded-full sm:px-8 sm:py-6"
               aria-label={`${s.title}, from ${s.price} — enquire`}
             >
               <span class="hidden shrink-0 sm:block" aria-hidden="true"><ArrowRight size={22} /></span>
               <span class="min-w-0 flex-1">
                 <span class="block font-display text-[1.75rem] font-normal leading-tight">{s.title}</span>
-                <span class="price-row-sub mt-1 block text-[15px] leading-snug text-main">{s.desc}</span>
+                <span class="price-row-sub mt-1 block text-[15px] leading-snug text-body">{s.desc}</span>
               </span>
               <span class="shrink-0 whitespace-nowrap text-right">
-                <span class="price-row-sub block text-xs font-semibold uppercase tracking-widest text-main">from</span>
+                <span class="price-row-sub block text-xs font-semibold uppercase tracking-widest text-body">from</span>
                 <span class="block font-display text-2xl font-normal">{s.price}</span>
               </span>
             </a>
           </li>
         ))}
       </ul>
-      <p class="reveal mt-6 text-[15px] leading-relaxed text-main">
+      <p class="reveal mt-6 text-[15px] leading-relaxed text-body">
         Need something different? A single mehndi, a two-city wedding, a full week of events —
         <a href="#contact" class="nav-link font-semibold text-ink">ask for a custom quote</a>.
       </p>
