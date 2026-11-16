@@ -1,5 +1,34 @@
-/* Shared fictional demo content for Vows by Aariz (v3).
-   All copy, names, prices and testimonials are original placeholders. */
+/* Shared fictional demo content for Vows by Aariz (v4).
+   All copy, names, prices and testimonials are original placeholders.
+   Every photo shows South Asian people in a Muslim wedding context
+   (verified by montage audit, 16 Nov 2026 — see BUILD-REPORT.md). */
+
+export interface GalleryPhoto {
+  src: string;
+  alt: string;
+  caption: string;
+  event: string;
+  w: number;
+  h: number;
+}
+
+export const GALLERY: GalleryPhoto[] = [
+  { src: '/images/gallery-01.webp', alt: 'Bride in a white veil and groom in a cream sherwani standing together by a window', caption: 'The quiet embrace', event: 'Nikkah · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-02.webp', alt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', caption: 'Golden hour vows', event: 'Baraat · Islamabad', w: 900, h: 1200 },
+  { src: '/images/gallery-03.webp', alt: 'Indian bride and groom in traditional attire embracing joyfully outdoors', caption: 'Pure joy', event: 'Walima · Karachi', w: 900, h: 1200 },
+  { src: '/images/gallery-04.webp', alt: 'Groom holding the bride’s henna-decorated hand with her ring', caption: 'Hand in hand', event: 'Nikkah · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-05.webp', alt: 'Bride in an orange and purple outfit smiling beside her groom in a red brocade kurta', caption: 'Colour and joy', event: 'Rukhsati · Murree', w: 900, h: 1200 },
+  { src: '/images/gallery-06.webp', alt: 'Close-up of a bride’s hands decorated with intricate henna', caption: 'Henna stories', event: 'Mehndi · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-07.webp', alt: 'Close-up of a couple’s hands during a wedding ritual with henna art', caption: 'The ritual', event: 'Mehndi · Faisalabad', w: 900, h: 1200 },
+  { src: '/images/gallery-08.webp', alt: 'Bride in red and yellow covering her face with henna-decorated hands, wearing a flower garland at her mehndi', caption: 'Mehndi joy', event: 'Mehndi · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-09.webp', alt: 'Couple in traditional attire embracing outdoors among green trees', caption: 'Together, always', event: 'Walima · Islamabad', w: 900, h: 1200 },
+  { src: '/images/gallery-10.webp', alt: 'Bride in white and gold holding hands with her groom in a green brocade sherwani', caption: 'Her hand in his', event: 'Walima · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-11.webp', alt: 'Bride in a red veil and groom in a white sherwani and turban at sunset', caption: 'Dusk, in gold', event: 'Qawwali Night · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-12.webp', alt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion', caption: 'The portrait', event: 'Baraat · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-13.webp', alt: 'Bride and groom in traditional attire standing together in front of a floral wedding stage', caption: 'The stage, set', event: 'Baraat · Lahore', w: 900, h: 1200 },
+  { src: '/images/gallery-14.webp', alt: 'Bride in white and groom in a cream kurta walking hand in hand under trees', caption: 'Walking together', event: 'Baraat · Hunza', w: 900, h: 1200 },
+  { src: '/images/gallery-15.webp', alt: 'Bride in a red lehenga with a veil looking down at the henna on her hands', caption: 'The bride, in red', event: 'Baraat · Lahore', w: 900, h: 1200 },
+];
 
 export interface ShowcaseImage {
   src: string;
@@ -19,9 +48,10 @@ export interface Service {
   images: [ShowcaseImage, ShowcaseImage, ShowcaseImage];
 }
 
-const G = (file: string, alt: string, ratio: string): ShowcaseImage => ({
-  src: `/images/${file}`,
-  alt,
+// Showcase images reuse gallery entries so alt text stays consistent.
+const G = (index: number, ratio: string): ShowcaseImage => ({
+  src: GALLERY[index].src,
+  alt: GALLERY[index].alt,
   ratio,
   w: 900,
   h: 1200,
@@ -35,11 +65,7 @@ export const SERVICES: Service[] = [
     price: 'PKR 85,000',
     showId: 'show-1',
     svcId: 'svc-1',
-    images: [
-      G('gallery-12.webp', 'Bride and groom in traditional attire posing indoors in modern bridal fashion', 'aspect-[3/4]'),
-      G('gallery-02.webp', 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', 'aspect-[4/5]'),
-      G('gallery-14.webp', 'Couple in traditional attire holding hands outdoors during their wedding photoshoot', 'aspect-[3/4]'),
-    ],
+    images: [G(11, 'aspect-[3/4]'), G(1, 'aspect-[4/5]'), G(13, 'aspect-[3/4]')],
   },
   {
     n: 2,
@@ -48,11 +74,7 @@ export const SERVICES: Service[] = [
     price: 'PKR 120,000',
     showId: 'show-2',
     svcId: 'svc-2',
-    images: [
-      G('gallery-05.webp', 'Black and white silhouette portrait of a bride and groom at sunset', 'aspect-[3/4]'),
-      G('gallery-11.webp', 'Outdoor evening event space lit with fairy lights and draped curtains', 'aspect-[4/5]'),
-      G('gallery-09.webp', 'Sunset-lit outdoor wedding reception setup with adorned tables and chairs', 'aspect-[3/4]'),
-    ],
+    images: [G(4, 'aspect-[3/4]'), G(10, 'aspect-[4/5]'), G(8, 'aspect-[3/4]')],
   },
   {
     n: 3,
@@ -61,11 +83,7 @@ export const SERVICES: Service[] = [
     price: 'PKR 45,000',
     showId: 'show-3',
     svcId: 'svc-3',
-    images: [
-      G('gallery-08.webp', 'Bride in red and yellow covering her face with henna-decorated hands, wearing a flower garland at her mehndi', 'aspect-[3/4]'),
-      G('gallery-06.webp', 'Close-up of a bride’s hands decorated with intricate henna', 'aspect-[4/5]'),
-      G('gallery-07.webp', 'Close-up of a couple’s hands during a wedding ritual with henna art', 'aspect-[3/4]'),
-    ],
+    images: [G(7, 'aspect-[3/4]'), G(5, 'aspect-[4/5]'), G(6, 'aspect-[3/4]')],
   },
   {
     n: 4,
@@ -74,11 +92,7 @@ export const SERVICES: Service[] = [
     price: 'PKR 40,000',
     showId: 'show-4',
     svcId: 'svc-4',
-    images: [
-      G('gallery-01.webp', 'Close-up of a smiling bride with her eyes closed hugging her groom', 'aspect-[3/4]'),
-      G('gallery-04.webp', 'Black and white photograph of a wedding couple holding hands', 'aspect-[4/5]'),
-      G('gallery-13.webp', 'Traditional couple in classic wedding attire sharing a joyful moment indoors', 'aspect-[3/4]'),
-    ],
+    images: [G(0, 'aspect-[3/4]'), G(3, 'aspect-[4/5]'), G(12, 'aspect-[3/4]')],
   },
   {
     n: 5,
@@ -87,11 +101,7 @@ export const SERVICES: Service[] = [
     price: 'PKR 60,000',
     showId: 'show-5',
     svcId: 'svc-5',
-    images: [
-      G('gallery-15.webp', 'Bride in a red lehenga with a veil looking down at the henna on her hands', 'aspect-[3/4]'),
-      G('gallery-03.webp', 'Indian bride and groom in traditional attire embracing joyfully outdoors', 'aspect-[4/5]'),
-      G('gallery-05.webp', 'Black and white silhouette portrait of a bride and groom at sunset', 'aspect-[3/4]'),
-    ],
+    images: [G(14, 'aspect-[3/4]'), G(2, 'aspect-[4/5]'), G(4, 'aspect-[3/4]')],
   },
   {
     n: 6,
@@ -101,9 +111,9 @@ export const SERVICES: Service[] = [
     showId: 'show-6',
     svcId: 'svc-6',
     images: [
-      { src: '/images/about.webp', alt: 'Newlyweds in traditional attire embracing under twinkling lights', ratio: 'aspect-[3/4]', w: 900, h: 1350 },
-      G('gallery-02.webp', 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', 'aspect-[4/5]'),
-      G('gallery-14.webp', 'Couple in traditional attire holding hands outdoors during their wedding photoshoot', 'aspect-[3/4]'),
+      { src: '/images/about.webp', alt: 'Couple in traditional attire smiling together against a plain wall', ratio: 'aspect-[3/4]', w: 900, h: 1350 },
+      G(1, 'aspect-[4/5]'),
+      G(13, 'aspect-[3/4]'),
     ],
   },
   {
@@ -113,39 +123,8 @@ export const SERVICES: Service[] = [
     price: 'PKR 35,000',
     showId: 'show-7',
     svcId: 'svc-7',
-    images: [
-      G('gallery-13.webp', 'Traditional couple in classic wedding attire sharing a joyful moment indoors', 'aspect-[3/4]'),
-      G('gallery-10.webp', 'Lavish wedding table with floral arrangements and hanging lights', 'aspect-[4/5]'),
-      G('gallery-03.webp', 'Indian bride and groom in traditional attire embracing joyfully outdoors', 'aspect-[3/4]'),
-    ],
+    images: [G(12, 'aspect-[3/4]'), G(9, 'aspect-[4/5]'), G(2, 'aspect-[3/4]')],
   },
-];
-
-export interface GalleryPhoto {
-  src: string;
-  alt: string;
-  caption: string;
-  event: string;
-  w: number;
-  h: number;
-}
-
-export const GALLERY: GalleryPhoto[] = [
-  { src: '/images/gallery-01.webp', alt: 'Close-up of a smiling bride with her eyes closed hugging her groom', caption: 'The quiet embrace', event: 'Nikkah · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-02.webp', alt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', caption: 'Golden hour vows', event: 'Baraat · Islamabad', w: 900, h: 1200 },
-  { src: '/images/gallery-03.webp', alt: 'Indian bride and groom in traditional attire embracing joyfully outdoors', caption: 'Pure joy', event: 'Walima · Karachi', w: 900, h: 1200 },
-  { src: '/images/gallery-04.webp', alt: 'Black and white photograph of a wedding couple holding hands', caption: 'Hand in hand', event: 'Nikkah · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-05.webp', alt: 'Black and white silhouette portrait of a bride and groom at sunset', caption: 'Silhouette at dusk', event: 'Rukhsati · Murree', w: 900, h: 1200 },
-  { src: '/images/gallery-06.webp', alt: 'Close-up of a bride’s hands decorated with intricate henna', caption: 'Henna stories', event: 'Mehndi · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-07.webp', alt: 'Close-up of a couple’s hands during a wedding ritual with henna art', caption: 'The ritual', event: 'Mehndi · Faisalabad', w: 900, h: 1200 },
-  { src: '/images/gallery-08.webp', alt: 'Bride in red and yellow covering her face with henna-decorated hands, wearing a flower garland at her mehndi', caption: 'Mehndi joy', event: 'Mehndi · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-09.webp', alt: 'Sunset-lit outdoor wedding reception setup with adorned tables and chairs', caption: 'The setting', event: 'Walima · Islamabad', w: 900, h: 1200 },
-  { src: '/images/gallery-10.webp', alt: 'Lavish wedding table with floral arrangements and hanging lights', caption: 'Table for two hundred', event: 'Walima · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-11.webp', alt: 'Outdoor evening event space lit with fairy lights and draped curtains', caption: 'A thousand lights', event: 'Qawwali Night · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-12.webp', alt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion', caption: 'The portrait', event: 'Baraat · Lahore', w: 900, h: 1200 },
-  { src: '/images/gallery-13.webp', alt: 'Traditional couple in classic wedding attire sharing a joyful moment indoors', caption: 'Laughter, kept', event: 'Nikkah · Karachi', w: 900, h: 1200 },
-  { src: '/images/gallery-14.webp', alt: 'Couple in traditional attire holding hands outdoors during their wedding photoshoot', caption: 'Walking together', event: 'Baraat · Hunza', w: 900, h: 1200 },
-  { src: '/images/gallery-15.webp', alt: 'Bride in a red lehenga with a veil looking down at the henna on her hands', caption: 'The bride, in red', event: 'Baraat · Lahore', w: 900, h: 1200 },
 ];
 
 export interface EventCard {
@@ -185,8 +164,8 @@ export const MEGA_MENUS: MegaMenu[] = [
     label: 'Services',
     panelId: 'mega-services',
     heading: 'Services',
-    photo: '/images/gallery-12.webp',
-    photoAlt: 'Bride and groom in traditional attire posing indoors in modern bridal fashion',
+    photo: GALLERY[11].src,
+    photoAlt: GALLERY[11].alt,
     links: [
       ...SERVICES.map((s) => ({ label: s.title, href: `#${s.showId}` })),
       { label: 'View All Services', href: '#services' },
@@ -197,8 +176,8 @@ export const MEGA_MENUS: MegaMenu[] = [
     label: 'Events',
     panelId: 'mega-events',
     heading: 'Events',
-    photo: '/images/gallery-08.webp',
-    photoAlt: 'Bride in red and yellow covering her face with henna-decorated hands at her mehndi',
+    photo: GALLERY[7].src,
+    photoAlt: GALLERY[7].alt,
     links: [
       { label: 'Nikkah', href: '#evt-1' },
       { label: 'Mehndi', href: '#evt-2' },
@@ -215,8 +194,8 @@ export const MEGA_MENUS: MegaMenu[] = [
     label: 'Packages',
     panelId: 'mega-packages',
     heading: 'Packages',
-    photo: '/images/gallery-02.webp',
-    photoAlt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors',
+    photo: GALLERY[1].src,
+    photoAlt: GALLERY[1].alt,
     links: [
       ...SERVICES.map((s) => ({ label: s.title, href: `#${s.svcId}` })),
       { label: 'Custom Quote', href: '#contact' },
