@@ -12,6 +12,11 @@ export interface GalleryPhoto {
   h: number;
 }
 
+/** 480w variant URL for a 900w gallery/about image (e.g. gallery-01-480.webp). */
+export const src480 = (src: string): string => src.replace(/\.webp$/, '-480.webp');
+/** Responsive srcset pairing the 480w variant with the full 900w file. */
+export const srcset900 = (src: string): string => `${src480(src)} 480w, ${src} 900w`;
+
 export const GALLERY: GalleryPhoto[] = [
   { src: '/images/gallery-01.webp', alt: 'Bride in a white veil and groom in a cream sherwani standing together by a window', caption: 'The quiet embrace', event: 'Nikkah · Lahore', w: 900, h: 1200 },
   { src: '/images/gallery-02.webp', alt: 'Couple in traditional South Asian wedding attire sharing a romantic moment outdoors', caption: 'Golden hour vows', event: 'Baraat · Islamabad', w: 900, h: 1200 },
