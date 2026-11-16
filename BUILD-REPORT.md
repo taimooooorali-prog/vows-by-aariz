@@ -287,10 +287,13 @@ v3 originals in `photos/raw/` were not touched.
   `<picture>` art direction (`fetchpriority="high"`, eager, explicit dims),
   NOT animated on load; each viewport downloads exactly one hero crop
   (verified via `currentSrc` in QA). No slider JS, no grayscale filter.
-- Gallery slider images are eager (not lazy): lazy images inside a
-  translated track can stay unloaded until stepped to, causing blank tiles;
-  eager loading guarantees every step is filled. All other below-fold
-  images: lazy + async decoding + explicit dims.
+- All below-fold images are `loading="lazy"` + async decoding + explicit
+  dims (only the hero photo and the 56px promo-pill thumbnail are eager).
+  Gallery slider images are lazy too: each slide's image loads as it
+  steps into view (verified in QA by driving the slider through all 15
+  slides — no blank tiles). Every gallery/about image also carries a
+  `srcset` (480w/900w) + `sizes` so small displays download the 480w
+  variant; the lightbox always opens the full 900w file.
 - Fonts: self-hosted variable woff2 (140 KB total), 2 files preloaded, no
   render-blocking third-party CSS.
 - Zero external requests on the page itself (verified in headless QA): the
@@ -429,6 +432,28 @@ v3 originals in `photos/raw/` were not touched.
 
 ## Changelog
 
+- **2026-11-16 — v4 performance pass (post-deploy).** Fresh PageSpeed
+  mobile was 91 (LCP 3.5s, 20 eager images, 827 KiB image-delivery
+  savings flagged). Changes, zero visual/copy/layout change: (1) every
+  image below the fold set to `loading="lazy"` — only the hero photo and
+  the promo-pill thumbnail stay eager (2 eager in the built HTML, was
+  20); (2) 480×640 WebP q72 variants baked for all 15 gallery photos +
+  `about-480.webp` (480×720), downscaled from the baked 900w files so
+  framing is pixel-identical; `srcset` (480w/900w) + `sizes` added to
+  every gallery/about image (slider 60vw/320px, cards/events 90vw/400px,
+  team 90vw/380px, services/reviews 90vw/600px, mega-menu 250px, pill
+  thumb 56px) via a `srcset900()` helper in `src/data/site.ts`; the
+  lightbox still opens the full 900w file via `data-full` (verified:
+  lightbox naturalWidth === 900); (3) video checked — `showreel.mp4`
+  already has its moov atom first (faststart, offset 36 < mdat 6063),
+  so no re-encode was needed; (4) hero-paint audit — nothing in JS/CSS
+  delays hero paint (no reveal classes on the hero, GSAP initial states
+  are JS-only, preloads match the `<picture>` media queries), so no hero
+  change. QA: `qa-v4.js` 107/107 (script updated minimally: gallery
+  drive-through before the images check since lazy carousel slides only
+  load when scrolled into view; `.is-clone` duplicates excluded;
+  lightbox check strengthened to naturalWidth === 900). PageSpeed
+  re-check happens after deploy.
 - **2026-11-16 — v4 FINAL rebuild.** The user asked for a premium final
   version: hero rebuilt so text never covers a face or focal point, original
   colours instead of B&W, ALL images Pakistani Muslim people, the badges
