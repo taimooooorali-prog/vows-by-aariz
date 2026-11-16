@@ -4,14 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: '#FEFCEA',
-        paper: '#FBFBFB',
-        ink: '#222222',
-        body: '#333333',
-        main: '#585858',
-        hairline: 'rgba(88,88,88,0.48)',
+        soft: '#FAFAF8',
+        blush: '#FDF2F4',
+        blushpill: '#FCF4F6',
+        ink: '#1A1A1A',
+        body: '#555555',
+        hairline: '#E8E8E8',
+        line: '#DADADA',
         dark: '#191919',
-        blush: '#D0B8AC',
+        rose: '#A93A5B',
+        rosedark: '#93324E',
+        roselight: '#D96A8A',
       },
       fontFamily: {
         display: ['"EB Garamond"', 'Georgia', 'serif'],
@@ -23,6 +26,7 @@ export default {
       boxShadow: {
         soft: '0 24px 60px -24px rgba(25, 25, 25, 0.25)',
         card: '0 10px 40px -12px rgba(25, 25, 25, 0.14)',
+        pill: '0 18px 50px -18px rgba(25, 25, 25, 0.28)',
       },
     },
   },
