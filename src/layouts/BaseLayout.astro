@@ -61,7 +61,7 @@ const jsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Bride in red and groom in a pink turban at a Pakistani wedding" />
+    <meta property="og:image:alt" content="Bride in red and groom in a white turban standing on a mountain path at a Pakistani wedding" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -70,19 +70,27 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#FEFCEA" />
+    <meta name="theme-color" content="#FFFFFF" />
 
     <!-- Self-hosted variable fonts (latin subset): preload the two critical files -->
     <link rel="preload" href="/fonts/eb-garamond.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Hero image preload (LCP element: first hero slide) -->
+    <!-- Hero image preload (LCP element: single static hero photo).
+         Media-matched preloads mirror the <picture> art direction so each
+         viewport downloads exactly one hero crop — no double download. -->
     <link
       rel="preload"
       as="image"
-      href="/images/hero-slide-1.webp"
-      imagesrcset="/images/hero-slide-1.webp 1920w"
-      imagesizes="100vw"
+      href="/images/hero-main-mobile.webp"
+      media="(orientation: portrait) and (max-width: 1024px), (max-width: 640px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-main.webp"
+      media="(min-width: 641px) and (orientation: landscape), (min-width: 1025px)"
       fetchpriority="high"
     />
 
