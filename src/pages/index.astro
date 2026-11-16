@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import HeroSlider from '../components/HeroSlider.astro';
-import AwardsRow from '../components/AwardsRow.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import IntroAwards from '../components/IntroAwards.astro';
 import Gallery from '../components/Gallery.astro';
 import ServicesShowcase from '../components/ServicesShowcase.astro';
 import AboutSection from '../components/AboutSection.astro';
+import WhyRow from '../components/WhyRow.astro';
 import PricesList from '../components/PricesList.astro';
 import EventsGrid from '../components/EventsGrid.astro';
 import Testimonials from '../components/Testimonials.astro';
@@ -25,21 +27,23 @@ import { MessageCircle } from 'lucide-astro';
   <Header />
 
   <main id="main">
-    <HeroSlider />
-    <AwardsRow />
+    <Hero />
+    <FeatureCards />
+    <IntroAwards />
     <Gallery />
     <ServicesShowcase />
     <AboutSection />
+    <WhyRow />
     <PricesList />
     <EventsGrid />
     <Testimonials />
     <AlbumsSection />
 
     <!-- ============ CONTACT ============ -->
-    <section id="contact" class="scroll-mt-24 py-[90px] lg:scroll-mt-[111px]" aria-label="Contact us">
+    <section id="contact" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="Contact us">
       <div class="mx-auto max-w-[600px] px-5 text-center sm:px-8">
-        <h2 class="reveal font-display text-5xl font-normal leading-[1.05] tracking-tight sm:text-6xl">Contact Us</h2>
-        <p class="reveal mt-4 text-[1.125rem] leading-relaxed text-main">
+        <h2 class="reveal font-display text-5xl font-normal leading-[1.05] tracking-tight text-ink sm:text-6xl">Contact Us</h2>
+        <p class="reveal mt-4 text-[1.125rem] leading-relaxed text-body">
           Tell us about your celebration and we’ll reply within 24 hours with availability
           and a tailored quote. No obligation — just a conversation.
         </p>
@@ -50,7 +54,7 @@ import { MessageCircle } from 'lucide-astro';
           href="https://wa.me/923000000000?text=Hi%20Aariz!%20We%27d%20love%20to%20check%20availability%20for%20our%20wedding."
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-pill reveal mt-6 w-full"
+          class="btn-secondary reveal mt-6 w-full"
         >
           <MessageCircle size={19} aria-hidden="true" /> Chat on WhatsApp
         </a>
