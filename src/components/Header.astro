@@ -1,6 +1,6 @@
 ---
 import { Aperture, ChevronDown, Menu, X } from 'lucide-astro';
-import { MEGA_MENUS } from '../data/site';
+import { MEGA_MENUS, srcset900 } from '../data/site';
 
 // Nav order: Services⌄, Portfolio, Events⌄, Testimonials, Packages⌄, About Us, Albums, Contact
 const megaByKey = Object.fromEntries(MEGA_MENUS.map((m) => [m.key, m]));
@@ -86,10 +86,12 @@ const mobileAccordions: { menu: (typeof MEGA_MENUS)[number]; before: PlainLink |
       <div class="mx-auto flex max-w-7xl items-center gap-10 px-5 py-6 sm:px-8">
         <img
           src={menu.photo}
+          srcset={srcset900(menu.photo)}
+          sizes="250px"
           alt={menu.photoAlt}
           width="250"
           height="310"
-          loading="eager"
+          loading="lazy"
           decoding="async"
           class="hidden h-[310px] w-[250px] shrink-0 rounded-[20px] object-cover sm:block"
         />

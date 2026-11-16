@@ -1,5 +1,6 @@
 ---
 import { ArrowUpRight } from 'lucide-astro';
+import { srcset900 } from '../data/site';
 
 const cards = [
   {
@@ -37,6 +38,8 @@ const cards = [
         >
           <img
             src={c.src}
+            srcset={srcset900(c.src)}
+            sizes="(max-width: 768px) 90vw, 400px"
             alt={c.alt}
             width="900"
             height="1200"

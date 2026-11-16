@@ -1,4 +1,6 @@
 ---
+import { srcset900 } from '../data/site';
+
 const team = [
   {
     name: 'Aariz Ahmed',
@@ -74,6 +76,8 @@ const team = [
           <div class="relative overflow-hidden rounded-[24px]">
             <img
               src={t.src}
+              srcset={srcset900(t.src)}
+              sizes="(max-width: 768px) 90vw, 380px"
               alt={t.alt}
               width={t.w}
               height={t.h}

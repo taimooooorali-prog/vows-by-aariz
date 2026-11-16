@@ -1,6 +1,6 @@
 ---
 import { ArrowUpRight } from 'lucide-astro';
-import { EVENTS } from '../data/site';
+import { EVENTS, srcset900 } from '../data/site';
 ---
 
 <section id="events" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="Events">
@@ -23,6 +23,8 @@ import { EVENTS } from '../data/site';
           >
             <img
               src={e.photo.src}
+              srcset={srcset900(e.photo.src)}
+              sizes="(max-width: 768px) 90vw, 400px"
               alt={e.photo.alt}
               width={e.photo.w}
               height={e.photo.h}

@@ -1,6 +1,6 @@
 ---
 import { ArrowLeft, ArrowRight } from 'lucide-astro';
-import { GALLERY } from '../data/site';
+import { GALLERY, srcset900 } from '../data/site';
 ---
 
 <section id="portfolio" class="scroll-mt-24 py-[90px] lg:scroll-mt-[92px]" aria-label="The Portfolio">
@@ -33,10 +33,12 @@ import { GALLERY } from '../data/site';
           >
             <img
               src={p.src}
+              srcset={srcset900(p.src)}
+              sizes="(max-width: 768px) 60vw, 320px"
               alt={p.alt}
               width={p.w}
               height={p.h}
-              loading="eager"
+              loading="lazy"
               decoding="async"
               class="h-full w-full rounded-[20px] object-cover"
             />

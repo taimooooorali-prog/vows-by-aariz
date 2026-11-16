@@ -1,5 +1,6 @@
 ---
 import { ArrowLeft, ArrowRight, Star } from 'lucide-astro';
+import { srcset900 } from '../data/site';
 
 const testimonials = [
   {
@@ -38,6 +39,8 @@ const testimonials = [
       <div class="mt-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14" data-reviews-carousel>
         <img
           src="/images/gallery-02.webp"
+          srcset={srcset900('/images/gallery-02.webp')}
+          sizes="(max-width: 768px) 90vw, 600px"
           alt="Couple in traditional South Asian wedding attire sharing a romantic moment outdoors"
           width="900"
           height="1200"

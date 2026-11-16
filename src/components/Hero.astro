@@ -1,5 +1,6 @@
 ---
 import { ArrowRight } from 'lucide-astro';
+import { srcset900 } from '../data/site';
 ---
 
 <!-- ============ HERO: single static colour photo, text in true negative space ============ -->
@@ -58,6 +59,8 @@ import { ArrowRight } from 'lucide-astro';
     <div class="flex w-full items-center gap-4 sm:w-auto sm:min-w-0 sm:flex-1">
       <img
         src="/images/gallery-02.webp"
+        srcset={srcset900('/images/gallery-02.webp')}
+        sizes="56px"
         alt=""
         width="56"
         height="56"

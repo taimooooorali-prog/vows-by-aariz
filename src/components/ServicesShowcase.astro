@@ -1,6 +1,6 @@
 ---
 import { ArrowRight } from 'lucide-astro';
-import { SERVICES } from '../data/site';
+import { SERVICES, srcset900 } from '../data/site';
 ---
 
 <section id="services" class="scroll-mt-24 lg:scroll-mt-[92px]" aria-label="Services">
@@ -31,6 +31,8 @@ import { SERVICES } from '../data/site';
           <div class="flex flex-col gap-4 sm:gap-5" data-parallax-col="a">
             <img
               src={s.images[0].src}
+              srcset={srcset900(s.images[0].src)}
+              sizes="(max-width: 768px) 90vw, 600px"
               alt={s.images[0].alt}
               width={s.images[0].w}
               height={s.images[0].h}
@@ -40,6 +42,8 @@ import { SERVICES } from '../data/site';
             />
             <img
               src={s.images[1].src}
+              srcset={srcset900(s.images[1].src)}
+              sizes="(max-width: 768px) 90vw, 600px"
               alt={s.images[1].alt}
               width={s.images[1].w}
               height={s.images[1].h}
@@ -51,6 +55,8 @@ import { SERVICES } from '../data/site';
           <div class="flex flex-col gap-4 sm:gap-5 lg:mt-16" data-parallax-col="b">
             <img
               src={s.images[2].src}
+              srcset={srcset900(s.images[2].src)}
+              sizes="(max-width: 768px) 90vw, 600px"
               alt={s.images[2].alt}
               width={s.images[2].w}
               height={s.images[2].h}
